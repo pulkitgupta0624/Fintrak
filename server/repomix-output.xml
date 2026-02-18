@@ -1,0 +1,1068 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+package.json
+src/config/database.config.ts
+src/config/env.config.ts
+src/config/http.config.ts
+src/enums/date-range.enum.ts
+src/enums/error-code.enum.ts
+src/eslint.config.ts
+src/index.ts
+src/middlewares/asyncHandler.middleware.ts
+src/middlewares/errorHandler.middleware.ts
+src/models/report-setting.model.ts
+src/models/report.model.ts
+src/models/transaction.model.ts
+src/models/user.model.ts
+src/utils/app-error.ts
+src/utils/bcrypt.ts
+src/utils/date.ts
+src/utils/format-currency.ts
+src/utils/get-env.ts
+src/utils/jwt.ts
+src/validators/auth.validator.ts
+src/validators/report.validator.ts
+src/validators/transaction.validator.ts
+src/validators/user.validator.ts
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="package.json">
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.41.0",
+    "axios": "^1.13.5",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^2.2.1",
+    "node-cron": "^4.2.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "resend": "^6.9.2",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^25.2.3",
+    "@types/node-cron": "^3.0.11",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.55.0"
+  }
+}
+</file>
+
+<file path="src/config/database.config.ts">
+import mongoose from 'mongoose'
+import { Env } from './env.config.js'
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(Env.MONGO_URI, {
+            serverSelectionTimeoutMS: 8000,
+            socketTimeoutMS: 45000,
+            connectTimeoutMS: 10000
+        })
+        console.log("Connected to MongoDB database");
+    } catch (error) {
+        console.error("Error connecting to MongoDB database:", error);
+        process.exit(1)
+    }
+};
+
+export default connectDatabase
+</file>
+
+<file path="src/config/env.config.ts">
+import { getEnv } from "../utils/get-env.ts";
+
+const envConfig = () => ({
+  NODE_ENV: getEnv("NODE_ENV", "development"),
+
+  PORT: getEnv("PORT", "8000"),
+  BASE_PATH: getEnv("BASE_PATH", "/api"),
+  MONGO_URI: getEnv("MONGO_URI"),
+
+  JWT_SECRET: getEnv("JWT_SECRET", "secert_jwt"),
+  JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "15m") as string,
+
+  JWT_REFRESH_SECRET: getEnv("JWT_REFRESH_SECRET", "secert_jwt_refresh"),
+  JWT_REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "7d") as string,
+
+//   GEMINI_API_KEY: getEnv("GEMINI_API_KEY"),
+
+//   CLOUDINARY_CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
+//   CLOUDINARY_API_KEY: getEnv("CLOUDINARY_API_KEY"),
+//   CLOUDINARY_API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+
+//   RESEND_API_KEY: getEnv("RESEND_API_KEY"),
+//   RESEND_MAILER_SENDER: getEnv("RESEND_MAILER_SENDER", ""),
+
+  FRONTEND_ORIGIN: getEnv("FRONTEND_ORIGIN", "localhost"),
+});
+
+export const Env = envConfig();
+</file>
+
+<file path="src/config/http.config.ts">
+const httpConfig = () => ({
+  OK: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  NO_CONTENT: 204,
+  // Client error responses
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  CONFLICT: 409,
+  UNPROCESSABLE_ENTITY: 422,
+  TOO_MANY_REQUESTS: 429,
+
+  // Server error responses
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504,
+});
+
+export const HTTPSTATUS = httpConfig();
+
+export type HttpStatusCodeType = (typeof HTTPSTATUS)[keyof typeof HTTPSTATUS];
+</file>
+
+<file path="src/enums/date-range.enum.ts">
+export enum DateRangeEnum {
+  LAST_30_DAYS = "30days",
+  LAST_MONTH = "lastMonth",
+  LAST_3_MONTHS = "last3Months",
+  LAST_YEAR = "lastYear",
+  THIS_MONTH = "thisMonth",
+  THIS_YEAR = "thisYear",
+  ALL_TIME = "allTime",
+  CUSTOM = "custom",
+}
+
+export type DateRangePreset = `${DateRangeEnum}`;
+</file>
+
+<file path="src/enums/error-code.enum.ts">
+export const ErrorCodeEnum = {
+  ACCESS_UNAUTHORIZED: "ACCESS_UNAUTHORIZED",
+
+  AUTH_USER_NOT_FOUND: "AUTH_USER_NOT_FOUND",
+
+  AUTH_EMAIL_ALREADY_EXISTS: "AUTH_EMAIL_ALREADY_EXISTS",
+  AUTH_INVALID_TOKEN: "AUTH_INVALID_TOKEN",
+
+  AUTH_NOT_FOUND: "AUTH_NOT_FOUND",
+  AUTH_TOO_MANY_ATTEMPTS: "AUTH_TOO_MANY_ATTEMPTS",
+  AUTH_UNAUTHORIZED_ACCESS: "AUTH_UNAUTHORIZED_ACCESS",
+  AUTH_TOKEN_NOT_FOUND: "AUTH_TOKEN_NOT_FOUND",
+  // Validation and Resource Errors
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+  RESOURCE_NOT_FOUND: "RESOURCE_NOT_FOUND",
+  FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR",
+
+  // System Errors
+  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+} as const;
+
+export type ErrorCodeEnumType = keyof typeof ErrorCodeEnum;
+</file>
+
+<file path="src/eslint.config.ts">
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+  { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },
+  tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+]);
+</file>
+
+<file path="src/index.ts">
+import "dotenv/config"
+import express, { NextFunction, Response, Request } from 'express'
+import { Env } from "./config/env.config.js"
+import cors from 'cors'
+import { HTTPSTATUS } from "./config/http.config.js";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
+import { BadRequestException } from "./utils/app-error.js";
+import { asyncHandler } from "./middlewares/asyncHandler.middleware.js";
+import connectDatabase from "./config/database.config.js";
+
+const app = express();
+const BASE_PATH = Env.BASE_PATH;
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use(
+    cors({
+        origin: Env.FRONTEND_ORIGIN,
+        credentials: true,
+    })
+)
+
+app.get("/", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    throw new BadRequestException("This is a test error");
+    res.status(HTTPSTATUS.OK).json({
+        message: "Hello Subcribe to the channel",
+    });
+}))
+
+app.use(errorHandler)
+
+const startServer = async () => {
+    try {
+        await connectDatabase();
+
+        app.listen(Env.PORT, () => {
+            console.log(
+                `Server is running on port ${Env.PORT} in ${Env.NODE_ENV} mode`
+            );
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+};
+
+startServer();
+</file>
+
+<file path="src/middlewares/asyncHandler.middleware.ts">
+import { Request, Response, NextFunction } from "express";
+
+type AsyncControllerType = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => Promise<any>;
+
+export const asyncHandler =
+  (controller: AsyncControllerType): AsyncControllerType =>
+  async (req, res, next) => {
+    try {
+      await controller(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+</file>
+
+<file path="src/middlewares/errorHandler.middleware.ts">
+import { ErrorRequestHandler } from "express"
+import { HTTPSTATUS } from "../config/http.config.js";
+import { AppError } from "../utils/app-error.js";
+
+export const errorHandler: ErrorRequestHandler = (
+    error, 
+    req, 
+    res, 
+    next
+): any => {
+    console.log("Error occured on path: ", req.path);
+
+    if(error instanceof AppError) {
+        return res.status(error.statusCode).json({
+            message: error.message,
+            errorCode: error.errorCode
+        })
+    }
+
+    return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+        message: "Intenal Server Error",
+        error: error?.message || "Unknown error occurred"
+    })
+}
+</file>
+
+<file path="src/models/report-setting.model.ts">
+import mongoose from "mongoose";
+
+export enum ReportFrequencyEnum {
+  MONTHLY = "MONTHLY",
+}
+
+export interface ReportSettingDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  frequency: keyof typeof ReportFrequencyEnum;
+  isEnabled: boolean;
+  nextReportDate?: Date;
+  lastSentDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const reportSettingSchema = new mongoose.Schema<ReportSettingDocument>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    frequency: {
+      type: String,
+      enum: Object.values(ReportFrequencyEnum),
+      default: ReportFrequencyEnum.MONTHLY,
+    },
+    isEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    nextReportDate: {
+      type: Date,
+    },
+    lastSentDate: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ReportSettingModel = mongoose.model<ReportSettingDocument>(
+  "ReportSetting",
+  reportSettingSchema
+);
+
+export default ReportSettingModel;
+</file>
+
+<file path="src/models/report.model.ts">
+import mongoose from "mongoose";
+
+export enum ReportStatusEnum {
+    SENT = "SENT",
+    PENDING = "PENDING",
+    FAILED = "FAILED",
+    NO_ACTIVITY = "NO_ACTIVITY",
+}
+
+export interface ReportDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  period: string;
+  sentDate: Date;
+  status: keyof typeof ReportStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const reportSchema = new mongoose.Schema<ReportDocument>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    period: {
+      type: String,
+      required: true,
+    },
+    sentDate: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: Object.values(ReportStatusEnum),
+      default: ReportStatusEnum.PENDING,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ReportModel = mongoose.model<ReportDocument>("Report", reportSchema);
+export default ReportModel;
+</file>
+
+<file path="src/models/transaction.model.ts">
+import mongoose, {Schema} from "mongoose";
+import { convertToCents, convertToDollarUnit } from "../utils/format-currency.ts";
+
+export enum TransactionStatusEnum {
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+}
+
+export enum RecurringIntervalEnum {
+  DAILY = "DAILY",
+  WEEKLY = "WEEKLY",
+  MONTHLY = "MONTHLY",
+  YEARLY = "YEARLY",
+}
+
+export enum TransactionTypeEnum {
+  INCOME = "INCOME",
+  EXPENSE = "EXPENSE",
+}
+
+export enum PaymentMethodEnum {
+  CARD = "CARD",
+  BANK_TRANSFER = "BANK_TRANSFER",
+  MOBILE_PAYMENT = "MOBILE_PAYMENT",
+  AUTO_DEBIT = "AUTO_DEBIT",
+  CASH = "CASH",
+  OTHER = "OTHER",
+}
+
+export interface TransactionDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  type: keyof typeof TransactionTypeEnum;
+  title: string;
+  amount: number;
+  category: string;
+  receiptUrl?: string;
+  recurringInterval?: keyof typeof RecurringIntervalEnum;
+  nextRecurringDate?: Date;
+  lastProcessed?: Date;
+  isRecurring: boolean;
+  description?: string;
+  date: Date;
+  status: keyof typeof TransactionStatusEnum;
+  paymentMethod: keyof typeof PaymentMethodEnum;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const transactionSchema = new Schema<TransactionDocument>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: Object.values(TransactionTypeEnum),
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+      set: (value: number) => convertToCents(value),
+      get: (value: number) => convertToDollarUnit(value),
+    },
+
+    description: {
+      type: String,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    receiptUrl: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    isRecurring: {
+      type: Boolean,
+      default: false,
+    },
+    recurringInterval: {
+      type: String,
+      enum: Object.values(RecurringIntervalEnum),
+      default: null,
+    },
+    nextRecurringDate: {
+      type: Date,
+      default: null,
+    },
+    lastProcessed: {
+      type: Date,
+      default: null,
+    },
+    status: {
+      type: String,
+      enum: Object.values(TransactionStatusEnum),
+      default: TransactionStatusEnum.COMPLETED,
+    },
+    paymentMethod: {
+      type: String,
+      enum: Object.values(PaymentMethodEnum),
+      default: PaymentMethodEnum.CASH,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true, getters: true },
+    toObject: { virtuals: true, getters: true },
+  }
+);
+
+const TransactionModel = mongoose.model<TransactionDocument>("Transaction", transactionSchema)
+
+export default TransactionModel
+</file>
+
+<file path="src/models/user.model.ts">
+import mongoose, { Document, Schema } from 'mongoose'
+import { compareValue, hashValue} from '../utils/bcrypt.ts'
+
+export interface UserDocument extends Document {
+    name: string
+    email: string
+    password: string
+    profilePicture: string | null
+    createdAt: Date
+    updatedAt: Date
+    comparePassword: (password: string) => Promise<boolean>
+    omitPassword: () => Omit<UserDocument, 'password'>
+}
+
+const userSchema = new Schema < UserDocument > (
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            lowercase: true,
+        },
+        profilePicture: {
+            type: String,
+            default: null,
+        },
+        password: {
+            type: String,
+            select: true,
+            required: true,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+userSchema.pre("save", async function (next) {
+    if(this.isModified("password")) {
+        if(this.password) {
+            this.password = await hashValue(this.password);
+        }
+    }
+    // next();
+})
+
+userSchema.methods.omitPassword = function (): Omit<UserDocument, "password"> {
+    const userObject = this.toObject();
+    delete userObject.password;
+    return userObject;
+};
+
+userSchema.methods.comparePassword = async function (password: string) {
+    return compareValue(password, this.password)
+}
+
+const UserModel = mongoose.model<UserDocument>("User", userSchema);
+export default UserModel
+</file>
+
+<file path="src/utils/app-error.ts">
+import { HTTPSTATUS, HttpStatusCodeType } from "../config/http.config.js";
+import { ErrorCodeEnumType, ErrorCodeEnum } from "../enums/error-code.enum.js";
+
+export class AppError extends Error {
+    public statusCode : HttpStatusCodeType;
+    public errorCode ?: ErrorCodeEnumType;
+
+    constructor(
+        message: string,
+        statusCode = HTTPSTATUS.INTERNAL_SERVER_ERROR,
+        errorCode ?: ErrorCodeEnumType
+    ) {
+        super(message);
+        this.statusCode = statusCode;
+        this.errorCode = errorCode;
+        Error.captureStackTrace(this, this.constructor)
+    }
+}
+
+export class HttpException extends AppError {
+    constructor(
+        message = "Http Exception error",
+        statusCode: HttpStatusCodeType,
+        errorCode ?: ErrorCodeEnumType
+    ) {
+        super(message, statusCode, errorCode);
+    }
+}
+
+export class NotFoundException extends AppError {
+  constructor(message = "Resource not found", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.NOT_FOUND,
+      errorCode || ErrorCodeEnum.RESOURCE_NOT_FOUND
+    );
+  }
+}
+
+export class BadRequestException extends AppError {
+  constructor(message = "Bad Request", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.BAD_REQUEST,
+      errorCode || ErrorCodeEnum.VALIDATION_ERROR
+    );
+  }
+}
+
+export class UnauthorizedException extends AppError {
+  constructor(message = "Unauthorized Access", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.UNAUTHORIZED,
+      errorCode || ErrorCodeEnum.ACCESS_UNAUTHORIZED
+    );
+  }
+}
+
+export class InternalServerException extends AppError {
+  constructor(
+    message = "Internal Server Error",
+    errorCode?: ErrorCodeEnumType
+  ) {
+    super(
+      message,
+      HTTPSTATUS.INTERNAL_SERVER_ERROR,
+      errorCode || ErrorCodeEnum.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+</file>
+
+<file path="src/utils/bcrypt.ts">
+import bcrypt from 'bcrypt'
+
+export const hashValue = async (value: string, saltRounds: number = 10) =>
+    await bcrypt.hash(value, saltRounds);
+
+export const compareValue = async (value: string, hashedValue: string) =>
+    await bcrypt.compare(value, hashedValue)
+</file>
+
+<file path="src/utils/date.ts">
+import {
+  endOfDay,
+  endOfMonth,
+  endOfYear,
+  startOfMonth,
+  startOfYear,
+  subDays,
+  subMonths,
+  subYears,
+} from "date-fns";
+import { DateRangeEnum, DateRangePreset } from "../enums/date-range.enum.ts";
+
+export const getDateRange = (
+  preset?: DateRangePreset,
+  customFrom?: Date,
+  customTo?: Date
+) => {
+  if (customFrom && customTo) {
+    return {
+      from: customFrom,
+      to: customTo,
+      value: DateRangeEnum.CUSTOM,
+    };
+  }
+
+  const now = new Date();
+
+  // const yesterday = subDays(now.setHours(0, 0, 0, 0), 1);
+  const today = endOfDay(now);
+  const last30Days = {
+    from: subDays(today, 29),
+    to: today,
+    value: DateRangeEnum.LAST_30_DAYS,
+    label: "Last 30 Days",
+  };
+  console.log(last30Days, "last30");
+
+  switch (preset) {
+    case DateRangeEnum.ALL_TIME:
+      return {
+        from: null,
+        to: null,
+        value: DateRangeEnum.ALL_TIME,
+        label: "All Time",
+      };
+    case DateRangeEnum.LAST_30_DAYS:
+      return last30Days;
+    case DateRangeEnum.LAST_MONTH:
+      return {
+        from: startOfMonth(subMonths(now, 1)),
+        to: endOfMonth(subMonths(now, 1)),
+        value: DateRangeEnum.LAST_MONTH,
+        label: "Last Month",
+      };
+    case DateRangeEnum.LAST_3_MONTHS:
+      return {
+        from: startOfMonth(subMonths(now, 3)),
+        to: endOfMonth(subMonths(now, 1)),
+        value: DateRangeEnum.LAST_3_MONTHS,
+        label: "Last 3 Months",
+      };
+    case DateRangeEnum.LAST_YEAR:
+      return {
+        from: startOfYear(subYears(now, 1)),
+        to: endOfYear(subYears(now, 1)),
+        value: DateRangeEnum.LAST_YEAR,
+        label: "Last Year",
+      };
+    case DateRangeEnum.THIS_MONTH:
+      return {
+        from: startOfMonth(now),
+        to: endOfDay(now),
+        value: DateRangeEnum.THIS_MONTH,
+        label: "This Month",
+      };
+    case DateRangeEnum.THIS_YEAR:
+      return {
+        from: startOfYear(now),
+        to: endOfDay(now),
+        value: DateRangeEnum.THIS_YEAR,
+        label: "This Year",
+      };
+    default:
+      return last30Days;
+  }
+};
+</file>
+
+<file path="src/utils/format-currency.ts">
+// Convert dollars to cents when saving
+export function convertToCents(amount: number) {
+  return Math.round(amount * 100);
+}
+
+// Convert cents to dollars when retrieving
+//convertFromCents
+export function convertToDollarUnit(amount: number) {
+  return amount / 100;
+}
+
+export function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
+</file>
+
+<file path="src/utils/get-env.ts">
+export const getEnv = (key: string, defaultValue?: string): string => {
+  const value = process.env[key];
+  if (value === undefined) {
+    if (defaultValue === undefined) {
+      throw new Error(`Environment variable ${key} is not set`);
+    }
+    return defaultValue;
+  }
+  return value;
+};
+</file>
+
+<file path="src/utils/jwt.ts">
+import jwt, {JwtPayload, SignOptions} from 'jsonwebtoken'
+import { Env } from '../config/env.config.ts'
+
+type TimeUnit = "s" | "m" | "h" | "d" | "w" | "y";
+type TimeString = `${number}${TimeUnit}`;
+
+export type AccessTokenPayload = {
+    userId: string;
+}
+
+type SignOptsAndSecret = SignOptions & {
+    secret: string;
+    expiresIn?: TimeString | number;
+}
+
+const defaults: SignOptions ={
+    audience: ["user"],
+}
+
+const accessTokenSignOptions : SignOptsAndSecret = {
+    expiresIn: Env.JWT_EXPIRES_IN as TimeString,
+    secret: Env.JWT_SECRET
+}
+
+export const signJwtToken = (
+    payload: AccessTokenPayload,
+    options?: SignOptsAndSecret
+) => {
+    const isAccessToken = !options || options === accessTokenSignOptions;
+
+    const { secret, ...opts } = options || accessTokenSignOptions;
+
+    const token = jwt.sign(payload, secret, {
+        ...defaults,
+        ...opts,
+    });
+
+    const expiresAt = isAccessToken
+        ? (jwt.decode(token) as JwtPayload)?.exp! * 1000
+        : undefined
+
+    return {
+        token,
+        expiresAt
+    }
+}
+</file>
+
+<file path="src/validators/auth.validator.ts">
+import { email, z } from "zod";
+
+export const emailSchema = z
+  .string()
+  .trim()
+  .email("Invalid email address")
+  .min(1)
+  .max(255);
+
+export const passwordSchema = z.string().trim().min(4);
+
+export const registerSchema = z.object({
+    name : z.string().trim().min(1).max(255),
+    email: emailSchema,
+    password: passwordSchema
+});
+
+export const loginSchema = z.object({
+    email: emailSchema,
+    password: passwordSchema
+})
+
+export type RegisterSchemaType = z.infer<typeof registerSchema>;
+export type LoginSchemaType = z.infer<typeof loginSchema>;
+</file>
+
+<file path="src/validators/report.validator.ts">
+import { z } from "zod";
+
+export const reportSettingSchema = z.object({
+  isEnabled: z.boolean().default(true),
+});
+
+export const updateReportSettingSchema = reportSettingSchema.partial();
+
+export type UpdateReportSettingType = z.infer<typeof updateReportSettingSchema>;
+</file>
+
+<file path="src/validators/transaction.validator.ts">
+import { z } from "zod";
+import {
+  PaymentMethodEnum,
+  RecurringIntervalEnum,
+  TransactionTypeEnum,
+} from "../models/transaction.model.ts";
+
+export const transactionIdSchema = z.string().trim().min(1);
+
+export const baseTransactionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  type: z.nativeEnum(TransactionTypeEnum, {
+    errorMap: () => ({ message: "Transaction type must be INCOME or EXPENSE" }),
+  }),
+  amount: z.number().positive("Amount must be postive").min(1),
+  category: z.string().min(1, "Category is required"),
+  date: z
+    .union([z.string().datetime({ message: "Invalid date string" }), z.date()])
+    .transform((val) => new Date(val)),
+  isRecurring: z.boolean().default(false),
+  recurringInterval: z
+    .enum([
+      RecurringIntervalEnum.DAILY,
+      RecurringIntervalEnum.WEEKLY,
+      RecurringIntervalEnum.MONTHLY,
+      RecurringIntervalEnum.YEARLY,
+    ])
+    .nullable()
+    .optional(),
+
+  receiptUrl: z.string().optional(),
+  paymentMethod: z
+    .enum([
+      PaymentMethodEnum.CARD,
+      PaymentMethodEnum.BANK_TRANSFER,
+      PaymentMethodEnum.MOBILE_PAYMENT,
+      PaymentMethodEnum.AUTO_DEBIT,
+      PaymentMethodEnum.CASH,
+      PaymentMethodEnum.OTHER,
+    ])
+    .default(PaymentMethodEnum.CASH),
+});
+
+export const bulkDeleteTransactionSchema = z.object({
+  transactionIds: z
+    .array(z.string().length(24, "Invalid transaction ID format"))
+    .min(1, "At least one transaction ID must be provided"),
+});
+
+export const bulkTransactionSchema = z.object({
+  transactions: z
+    .array(baseTransactionSchema)
+    .min(1, "At least one transaction is required")
+    .max(300, "Must not be more than 300 transactions")
+    .refine(
+      (txs) =>
+        txs.every((tx) => {
+          const amount = Number(tx.amount);
+          return !isNaN(amount) && amount > 0 && amount <= 1_000_000_000;
+        }),
+      {
+        message: "Amount must be a postive number",
+      }
+    ),
+});
+
+export const createTransactionSchema = baseTransactionSchema;
+export const updateTransactionSchema = baseTransactionSchema.partial();
+
+export type CreateTransactionType = z.infer<typeof createTransactionSchema>;
+
+export type UpdateTransactionType = z.infer<typeof updateTransactionSchema>;
+
+export type BulkDelteTransactionType = z.infer<
+  typeof bulkDeleteTransactionSchema
+>;
+</file>
+
+<file path="src/validators/user.validator.ts">
+import { z } from "zod";
+
+export const updateUserSchema = z.object({
+  name: z.string().trim().min(1).max(255).optional(),
+});
+
+export type UpdateUserType = z.infer<typeof updateUserSchema>;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true // We use tsup for building, tsc only for type-checking
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+</file>
+
+</files>

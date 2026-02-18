@@ -1,0 +1,5786 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+client/.env
+client/.gitignore
+client/components.json
+client/eslint.config.js
+client/index.html
+client/package.json
+client/README.md
+client/src/constant/plan.constant.ts
+client/src/features/billing/billingAPI.ts
+client/src/features/billing/billingType.ts
+client/tailwind.config.js
+client/tsconfig.app.json
+client/tsconfig.json
+client/tsconfig.node.json
+client/vite.config.ts
+ReceiptSwiss.jpg
+server/.env
+server/package.json
+server/repomix-output.xml
+server/src/@types/analytics.type.ts
+server/src/@types/index.d.ts
+server/src/@types/report.type.ts
+server/src/config/cloudinary.config.ts
+server/src/config/database.config.ts
+server/src/config/env.config.ts
+server/src/config/google-ai.ts
+server/src/config/http.config.ts
+server/src/config/passport.config.ts
+server/src/config/resend.config.ts
+server/src/config/stripe.config.ts
+server/src/controllers/analytics.controller.ts
+server/src/controllers/auth.controller.ts
+server/src/controllers/billing.controller.ts
+server/src/controllers/report.controller.ts
+server/src/controllers/transaction.controller.ts
+server/src/controllers/user.controller.ts
+server/src/crons/index.ts
+server/src/crons/jobs/report.job.ts
+server/src/crons/jobs/transaction.job.ts
+server/src/crons/scheduler.ts
+server/src/enums/date-range.enum.ts
+server/src/enums/error-code.enum.ts
+server/src/eslint.config.ts
+server/src/index.ts
+server/src/mailers/mailer.ts
+server/src/mailers/report.mailer.ts
+server/src/mailers/templates/report.template.ts
+server/src/middlewares/asyncHandler.middleware.ts
+server/src/middlewares/errorHandler.middleware.ts
+server/src/models/report-setting.model.ts
+server/src/models/report.model.ts
+server/src/models/subscription.model.ts
+server/src/models/transaction.model.ts
+server/src/models/user.model.ts
+server/src/routes/analytics.route.ts
+server/src/routes/auth.route.ts
+server/src/routes/billing.routes.ts
+server/src/routes/report.route.ts
+server/src/routes/transaction.route.ts
+server/src/routes/user.route.ts
+server/src/routes/webhook.route.ts
+server/src/services/analytics.service.ts
+server/src/services/auth.service.ts
+server/src/services/billing.service.ts
+server/src/services/report.service.ts
+server/src/services/transaction.service.ts
+server/src/services/user.service.ts
+server/src/utils/app-error.ts
+server/src/utils/bcrypt.ts
+server/src/utils/date.ts
+server/src/utils/format-currency.ts
+server/src/utils/get-env.ts
+server/src/utils/helper.ts
+server/src/utils/jwt.ts
+server/src/utils/prompt.ts
+server/src/validators/auth.validator.ts
+server/src/validators/billing.validator.ts
+server/src/validators/report.validator.ts
+server/src/validators/transaction.validator.ts
+server/src/validators/user.validator.ts
+server/tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="client/.env">
+VITE_API_URL=http://localhost:8000/api
+VITE_REDUX_PERSIST_SECRET_KEY=redux-persist
+</file>
+
+<file path="client/.gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+import-transaction-dialog
+_billing.tsx
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="client/components.json">
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/index.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide"
+}
+</file>
+
+<file path="client/eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+
+export default tseslint.config(
+  { ignores: ['dist'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+)
+</file>
+
+<file path="client/index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinTrak | Personnal Financial Platform</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="client/package.json">
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-avatar": "^1.1.7",
+    "@radix-ui/react-checkbox": "^1.2.3",
+    "@radix-ui/react-dialog": "^1.1.13",
+    "@radix-ui/react-dropdown-menu": "^2.1.12",
+    "@radix-ui/react-label": "^2.1.4",
+    "@radix-ui/react-navigation-menu": "^1.2.10",
+    "@radix-ui/react-popover": "^1.1.11",
+    "@radix-ui/react-progress": "^1.1.4",
+    "@radix-ui/react-radio-group": "^1.3.4",
+    "@radix-ui/react-select": "^2.2.2",
+    "@radix-ui/react-separator": "^1.1.4",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-switch": "^1.2.2",
+    "@radix-ui/react-tabs": "^1.1.9",
+    "@radix-ui/react-toggle": "^1.1.6",
+    "@radix-ui/react-toggle-group": "^1.1.7",
+    "@reduxjs/toolkit": "^2.8.1",
+    "@tailwindcss/vite": "^4.1.4",
+    "@tanstack/react-table": "^8.21.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^3.6.0",
+    "lucide-react": "^0.503.0",
+    "next-themes": "^0.4.6",
+    "nuqs": "^2.4.3",
+    "react": "^19.0.0",
+    "react-countup": "^6.5.3",
+    "react-currency-input-field": "^3.10.0",
+    "react-day-picker": "^9.13.2",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
+    "react-papaparse": "^4.4.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.5.2",
+    "recharts": "^2.15.3",
+    "redux-persist": "^6.0.0",
+    "redux-persist-transform-encrypt": "^5.1.1",
+    "sonner": "^2.0.3",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^4.1.4",
+    "tree": "^0.1.3",
+    "vaul": "^1.1.2",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/node": "^22.15.2",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.22.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "tw-animate-css": "^1.2.8",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.26.1",
+    "vite": "^6.3.1"
+  }
+}
+</file>
+
+<file path="client/README.md">
+# React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
+```
+</file>
+
+<file path="client/src/constant/plan.constant.ts">
+export const PLANS = {
+    MONTHLY: 'MONTHLY',
+    YEARLY: 'YEARLY'
+}
+
+export type PLAN_TYPE = (typeof PLANS)[keyof typeof PLANS]
+</file>
+
+<file path="client/src/features/billing/billingAPI.ts">
+import { apiClient } from "@/app/api-client";
+import { 
+    GetSubscriptionStatusResponse, 
+    UpgradeToProSubscriptionPayload 
+} from "./billingType";
+import { PLAN_TYPE } from "@/constant/plan.constant";
+
+export const billingApi = apiClient.injectEndpoints({
+    endpoints: (builder) => ({
+        upgradeToProSubscription: builder.mutation<
+            { url: string },
+            UpgradeToProSubscriptionPayload
+        >({
+            query: (body) => ({
+                url: "/billing/subscription/upgrade",
+                method: "POST",
+                body
+            })
+        }),
+
+        manageSubscriptionBillingPortal: builder.mutation<
+            { url: string },
+            { callbackUrl: string }
+        >({
+            query: (body) => ({
+                url: "/billing/subscription/billing-portal",
+                method: "POST",
+                body
+            })
+        }),
+
+        getUserSubscriptionStatus: builder.mutation<
+            GetSubscriptionStatusResponse,
+            void
+        >({
+            query: () => ({
+                url: "/billing/subscription/upgrade",
+                method: "GET",
+            })
+        }),
+
+        switchToSubscriptionPlan: builder.mutation<
+            { success: boolean; message: string },
+            { newPlan: PLAN_TYPE }
+        >({
+            query: (body) => ({
+                url: "/billing/subscription/switch-plan",
+                method: "POST",
+                body
+            })
+        }),
+    }),
+});
+
+
+export const {
+    useUpgradeToProSubscriptionMutation,
+    useManageSubscriptionBillingPortalMutation,
+    useGetUserSubscriptionStatusMutation,
+    useSwitchToSubscriptionPlanMutation
+} = billingApi
+</file>
+
+<file path="client/src/features/billing/billingType.ts">
+import { PLAN_TYPE } from "@/constant/plan.constant";
+
+export interface UpgradeToProSubscriptionPayload {
+    callbackUrl: string;
+    plan: PLAN_TYPE
+}
+
+export interface PlanData {
+    price: string;
+    billing: string;
+    savings: string | null;
+    features: string[]
+}
+
+export interface GetSubscriptionStatusResponse {
+    message: string;
+    data: {
+        isTrialActive: boolean;
+        currentPlan: PLAN_TYPE;
+        trialEndsAt: string;
+        trialDays: number;
+        status: string;
+        daysLeft: number;
+        planData: {
+            [key in PLAN_TYPE]: PlanData
+        }
+    }
+}
+</file>
+
+<file path="client/tailwind.config.js">
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+  theme: {
+    extend: {
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+};
+</file>
+
+<file path="client/tsconfig.app.json">
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "ignoreDeprecations" : "6.0",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
+</file>
+
+<file path="client/tsconfig.json">
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "ignoreDeprecations" : "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+</file>
+
+<file path="client/tsconfig.node.json">
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+  },
+  "include": ["vite.config.ts"]
+}
+</file>
+
+<file path="client/vite.config.ts">
+import { defineConfig } from 'vite'
+import tailwindcss from "@tailwindcss/vite"
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+</file>
+
+<file path="server/package.json">
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.41.0",
+    "axios": "^1.13.5",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.1",
+    "multer": "^2.0.2",
+    "node-cron": "^4.2.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "resend": "^6.9.2",
+    "streamifier": "^0.1.1",
+    "stripe": "^20.3.1",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^25.2.3",
+    "@types/node-cron": "^3.0.11",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/streamifier": "^0.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.55.0"
+  }
+}
+</file>
+
+<file path="server/repomix-output.xml">
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+package.json
+src/config/database.config.ts
+src/config/env.config.ts
+src/config/http.config.ts
+src/enums/date-range.enum.ts
+src/enums/error-code.enum.ts
+src/eslint.config.ts
+src/index.ts
+src/middlewares/asyncHandler.middleware.ts
+src/middlewares/errorHandler.middleware.ts
+src/models/report-setting.model.ts
+src/models/report.model.ts
+src/models/transaction.model.ts
+src/models/user.model.ts
+src/utils/app-error.ts
+src/utils/bcrypt.ts
+src/utils/date.ts
+src/utils/format-currency.ts
+src/utils/get-env.ts
+src/utils/jwt.ts
+src/validators/auth.validator.ts
+src/validators/report.validator.ts
+src/validators/transaction.validator.ts
+src/validators/user.validator.ts
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="package.json">
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.41.0",
+    "axios": "^1.13.5",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^2.2.1",
+    "node-cron": "^4.2.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "resend": "^6.9.2",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^25.2.3",
+    "@types/node-cron": "^3.0.11",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.55.0"
+  }
+}
+</file>
+
+<file path="src/config/database.config.ts">
+import mongoose from 'mongoose'
+import { Env } from './env.config.js'
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(Env.MONGO_URI, {
+            serverSelectionTimeoutMS: 8000,
+            socketTimeoutMS: 45000,
+            connectTimeoutMS: 10000
+        })
+        console.log("Connected to MongoDB database");
+    } catch (error) {
+        console.error("Error connecting to MongoDB database:", error);
+        process.exit(1)
+    }
+};
+
+export default connectDatabase
+</file>
+
+<file path="src/config/env.config.ts">
+import { getEnv } from "../utils/get-env.ts";
+
+const envConfig = () => ({
+  NODE_ENV: getEnv("NODE_ENV", "development"),
+
+  PORT: getEnv("PORT", "8000"),
+  BASE_PATH: getEnv("BASE_PATH", "/api"),
+  MONGO_URI: getEnv("MONGO_URI"),
+
+  JWT_SECRET: getEnv("JWT_SECRET", "secert_jwt"),
+  JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "15m") as string,
+
+  JWT_REFRESH_SECRET: getEnv("JWT_REFRESH_SECRET", "secert_jwt_refresh"),
+  JWT_REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "7d") as string,
+
+//   GEMINI_API_KEY: getEnv("GEMINI_API_KEY"),
+
+//   CLOUDINARY_CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
+//   CLOUDINARY_API_KEY: getEnv("CLOUDINARY_API_KEY"),
+//   CLOUDINARY_API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+
+//   RESEND_API_KEY: getEnv("RESEND_API_KEY"),
+//   RESEND_MAILER_SENDER: getEnv("RESEND_MAILER_SENDER", ""),
+
+  FRONTEND_ORIGIN: getEnv("FRONTEND_ORIGIN", "localhost"),
+});
+
+export const Env = envConfig();
+</file>
+
+<file path="src/config/http.config.ts">
+const httpConfig = () => ({
+  OK: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  NO_CONTENT: 204,
+  // Client error responses
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  CONFLICT: 409,
+  UNPROCESSABLE_ENTITY: 422,
+  TOO_MANY_REQUESTS: 429,
+
+  // Server error responses
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504,
+});
+
+export const HTTPSTATUS = httpConfig();
+
+export type HttpStatusCodeType = (typeof HTTPSTATUS)[keyof typeof HTTPSTATUS];
+</file>
+
+<file path="src/enums/date-range.enum.ts">
+export enum DateRangeEnum {
+  LAST_30_DAYS = "30days",
+  LAST_MONTH = "lastMonth",
+  LAST_3_MONTHS = "last3Months",
+  LAST_YEAR = "lastYear",
+  THIS_MONTH = "thisMonth",
+  THIS_YEAR = "thisYear",
+  ALL_TIME = "allTime",
+  CUSTOM = "custom",
+}
+
+export type DateRangePreset = `${DateRangeEnum}`;
+</file>
+
+<file path="src/enums/error-code.enum.ts">
+export const ErrorCodeEnum = {
+  ACCESS_UNAUTHORIZED: "ACCESS_UNAUTHORIZED",
+
+  AUTH_USER_NOT_FOUND: "AUTH_USER_NOT_FOUND",
+
+  AUTH_EMAIL_ALREADY_EXISTS: "AUTH_EMAIL_ALREADY_EXISTS",
+  AUTH_INVALID_TOKEN: "AUTH_INVALID_TOKEN",
+
+  AUTH_NOT_FOUND: "AUTH_NOT_FOUND",
+  AUTH_TOO_MANY_ATTEMPTS: "AUTH_TOO_MANY_ATTEMPTS",
+  AUTH_UNAUTHORIZED_ACCESS: "AUTH_UNAUTHORIZED_ACCESS",
+  AUTH_TOKEN_NOT_FOUND: "AUTH_TOKEN_NOT_FOUND",
+  // Validation and Resource Errors
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+  RESOURCE_NOT_FOUND: "RESOURCE_NOT_FOUND",
+  FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR",
+
+  // System Errors
+  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+} as const;
+
+export type ErrorCodeEnumType = keyof typeof ErrorCodeEnum;
+</file>
+
+<file path="src/eslint.config.ts">
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+  { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },
+  tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+]);
+</file>
+
+<file path="src/index.ts">
+import "dotenv/config"
+import express, { NextFunction, Response, Request } from 'express'
+import { Env } from "./config/env.config.js"
+import cors from 'cors'
+import { HTTPSTATUS } from "./config/http.config.js";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
+import { BadRequestException } from "./utils/app-error.js";
+import { asyncHandler } from "./middlewares/asyncHandler.middleware.js";
+import connectDatabase from "./config/database.config.js";
+
+const app = express();
+const BASE_PATH = Env.BASE_PATH;
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use(
+    cors({
+        origin: Env.FRONTEND_ORIGIN,
+        credentials: true,
+    })
+)
+
+app.get("/", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    throw new BadRequestException("This is a test error");
+    res.status(HTTPSTATUS.OK).json({
+        message: "Hello Subcribe to the channel",
+    });
+}))
+
+app.use(errorHandler)
+
+const startServer = async () => {
+    try {
+        await connectDatabase();
+
+        app.listen(Env.PORT, () => {
+            console.log(
+                `Server is running on port ${Env.PORT} in ${Env.NODE_ENV} mode`
+            );
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+};
+
+startServer();
+</file>
+
+<file path="src/middlewares/asyncHandler.middleware.ts">
+import { Request, Response, NextFunction } from "express";
+
+type AsyncControllerType = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => Promise<any>;
+
+export const asyncHandler =
+  (controller: AsyncControllerType): AsyncControllerType =>
+  async (req, res, next) => {
+    try {
+      await controller(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+</file>
+
+<file path="src/middlewares/errorHandler.middleware.ts">
+import { ErrorRequestHandler } from "express"
+import { HTTPSTATUS } from "../config/http.config.js";
+import { AppError } from "../utils/app-error.js";
+
+export const errorHandler: ErrorRequestHandler = (
+    error, 
+    req, 
+    res, 
+    next
+): any => {
+    console.log("Error occured on path: ", req.path);
+
+    if(error instanceof AppError) {
+        return res.status(error.statusCode).json({
+            message: error.message,
+            errorCode: error.errorCode
+        })
+    }
+
+    return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+        message: "Intenal Server Error",
+        error: error?.message || "Unknown error occurred"
+    })
+}
+</file>
+
+<file path="src/models/report-setting.model.ts">
+import mongoose from "mongoose";
+
+export enum ReportFrequencyEnum {
+  MONTHLY = "MONTHLY",
+}
+
+export interface ReportSettingDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  frequency: keyof typeof ReportFrequencyEnum;
+  isEnabled: boolean;
+  nextReportDate?: Date;
+  lastSentDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const reportSettingSchema = new mongoose.Schema<ReportSettingDocument>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    frequency: {
+      type: String,
+      enum: Object.values(ReportFrequencyEnum),
+      default: ReportFrequencyEnum.MONTHLY,
+    },
+    isEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    nextReportDate: {
+      type: Date,
+    },
+    lastSentDate: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ReportSettingModel = mongoose.model<ReportSettingDocument>(
+  "ReportSetting",
+  reportSettingSchema
+);
+
+export default ReportSettingModel;
+</file>
+
+<file path="src/models/report.model.ts">
+import mongoose from "mongoose";
+
+export enum ReportStatusEnum {
+    SENT = "SENT",
+    PENDING = "PENDING",
+    FAILED = "FAILED",
+    NO_ACTIVITY = "NO_ACTIVITY",
+}
+
+export interface ReportDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  period: string;
+  sentDate: Date;
+  status: keyof typeof ReportStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const reportSchema = new mongoose.Schema<ReportDocument>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    period: {
+      type: String,
+      required: true,
+    },
+    sentDate: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: Object.values(ReportStatusEnum),
+      default: ReportStatusEnum.PENDING,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ReportModel = mongoose.model<ReportDocument>("Report", reportSchema);
+export default ReportModel;
+</file>
+
+<file path="src/models/transaction.model.ts">
+import mongoose, {Schema} from "mongoose";
+import { convertToCents, convertToDollarUnit } from "../utils/format-currency.ts";
+
+export enum TransactionStatusEnum {
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+}
+
+export enum RecurringIntervalEnum {
+  DAILY = "DAILY",
+  WEEKLY = "WEEKLY",
+  MONTHLY = "MONTHLY",
+  YEARLY = "YEARLY",
+}
+
+export enum TransactionTypeEnum {
+  INCOME = "INCOME",
+  EXPENSE = "EXPENSE",
+}
+
+export enum PaymentMethodEnum {
+  CARD = "CARD",
+  BANK_TRANSFER = "BANK_TRANSFER",
+  MOBILE_PAYMENT = "MOBILE_PAYMENT",
+  AUTO_DEBIT = "AUTO_DEBIT",
+  CASH = "CASH",
+  OTHER = "OTHER",
+}
+
+export interface TransactionDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  type: keyof typeof TransactionTypeEnum;
+  title: string;
+  amount: number;
+  category: string;
+  receiptUrl?: string;
+  recurringInterval?: keyof typeof RecurringIntervalEnum;
+  nextRecurringDate?: Date;
+  lastProcessed?: Date;
+  isRecurring: boolean;
+  description?: string;
+  date: Date;
+  status: keyof typeof TransactionStatusEnum;
+  paymentMethod: keyof typeof PaymentMethodEnum;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const transactionSchema = new Schema<TransactionDocument>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: Object.values(TransactionTypeEnum),
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+      set: (value: number) => convertToCents(value),
+      get: (value: number) => convertToDollarUnit(value),
+    },
+
+    description: {
+      type: String,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    receiptUrl: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    isRecurring: {
+      type: Boolean,
+      default: false,
+    },
+    recurringInterval: {
+      type: String,
+      enum: Object.values(RecurringIntervalEnum),
+      default: null,
+    },
+    nextRecurringDate: {
+      type: Date,
+      default: null,
+    },
+    lastProcessed: {
+      type: Date,
+      default: null,
+    },
+    status: {
+      type: String,
+      enum: Object.values(TransactionStatusEnum),
+      default: TransactionStatusEnum.COMPLETED,
+    },
+    paymentMethod: {
+      type: String,
+      enum: Object.values(PaymentMethodEnum),
+      default: PaymentMethodEnum.CASH,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true, getters: true },
+    toObject: { virtuals: true, getters: true },
+  }
+);
+
+const TransactionModel = mongoose.model<TransactionDocument>("Transaction", transactionSchema)
+
+export default TransactionModel
+</file>
+
+<file path="src/models/user.model.ts">
+import mongoose, { Document, Schema } from 'mongoose'
+import { compareValue, hashValue} from '../utils/bcrypt.ts'
+
+export interface UserDocument extends Document {
+    name: string
+    email: string
+    password: string
+    profilePicture: string | null
+    createdAt: Date
+    updatedAt: Date
+    comparePassword: (password: string) => Promise<boolean>
+    omitPassword: () => Omit<UserDocument, 'password'>
+}
+
+const userSchema = new Schema < UserDocument > (
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            lowercase: true,
+        },
+        profilePicture: {
+            type: String,
+            default: null,
+        },
+        password: {
+            type: String,
+            select: true,
+            required: true,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+userSchema.pre("save", async function (next) {
+    if(this.isModified("password")) {
+        if(this.password) {
+            this.password = await hashValue(this.password);
+        }
+    }
+    // next();
+})
+
+userSchema.methods.omitPassword = function (): Omit<UserDocument, "password"> {
+    const userObject = this.toObject();
+    delete userObject.password;
+    return userObject;
+};
+
+userSchema.methods.comparePassword = async function (password: string) {
+    return compareValue(password, this.password)
+}
+
+const UserModel = mongoose.model<UserDocument>("User", userSchema);
+export default UserModel
+</file>
+
+<file path="src/utils/app-error.ts">
+import { HTTPSTATUS, HttpStatusCodeType } from "../config/http.config.js";
+import { ErrorCodeEnumType, ErrorCodeEnum } from "../enums/error-code.enum.js";
+
+export class AppError extends Error {
+    public statusCode : HttpStatusCodeType;
+    public errorCode ?: ErrorCodeEnumType;
+
+    constructor(
+        message: string,
+        statusCode = HTTPSTATUS.INTERNAL_SERVER_ERROR,
+        errorCode ?: ErrorCodeEnumType
+    ) {
+        super(message);
+        this.statusCode = statusCode;
+        this.errorCode = errorCode;
+        Error.captureStackTrace(this, this.constructor)
+    }
+}
+
+export class HttpException extends AppError {
+    constructor(
+        message = "Http Exception error",
+        statusCode: HttpStatusCodeType,
+        errorCode ?: ErrorCodeEnumType
+    ) {
+        super(message, statusCode, errorCode);
+    }
+}
+
+export class NotFoundException extends AppError {
+  constructor(message = "Resource not found", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.NOT_FOUND,
+      errorCode || ErrorCodeEnum.RESOURCE_NOT_FOUND
+    );
+  }
+}
+
+export class BadRequestException extends AppError {
+  constructor(message = "Bad Request", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.BAD_REQUEST,
+      errorCode || ErrorCodeEnum.VALIDATION_ERROR
+    );
+  }
+}
+
+export class UnauthorizedException extends AppError {
+  constructor(message = "Unauthorized Access", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.UNAUTHORIZED,
+      errorCode || ErrorCodeEnum.ACCESS_UNAUTHORIZED
+    );
+  }
+}
+
+export class InternalServerException extends AppError {
+  constructor(
+    message = "Internal Server Error",
+    errorCode?: ErrorCodeEnumType
+  ) {
+    super(
+      message,
+      HTTPSTATUS.INTERNAL_SERVER_ERROR,
+      errorCode || ErrorCodeEnum.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+</file>
+
+<file path="src/utils/bcrypt.ts">
+import bcrypt from 'bcrypt'
+
+export const hashValue = async (value: string, saltRounds: number = 10) =>
+    await bcrypt.hash(value, saltRounds);
+
+export const compareValue = async (value: string, hashedValue: string) =>
+    await bcrypt.compare(value, hashedValue)
+</file>
+
+<file path="src/utils/date.ts">
+import {
+  endOfDay,
+  endOfMonth,
+  endOfYear,
+  startOfMonth,
+  startOfYear,
+  subDays,
+  subMonths,
+  subYears,
+} from "date-fns";
+import { DateRangeEnum, DateRangePreset } from "../enums/date-range.enum.ts";
+
+export const getDateRange = (
+  preset?: DateRangePreset,
+  customFrom?: Date,
+  customTo?: Date
+) => {
+  if (customFrom && customTo) {
+    return {
+      from: customFrom,
+      to: customTo,
+      value: DateRangeEnum.CUSTOM,
+    };
+  }
+
+  const now = new Date();
+
+  // const yesterday = subDays(now.setHours(0, 0, 0, 0), 1);
+  const today = endOfDay(now);
+  const last30Days = {
+    from: subDays(today, 29),
+    to: today,
+    value: DateRangeEnum.LAST_30_DAYS,
+    label: "Last 30 Days",
+  };
+  console.log(last30Days, "last30");
+
+  switch (preset) {
+    case DateRangeEnum.ALL_TIME:
+      return {
+        from: null,
+        to: null,
+        value: DateRangeEnum.ALL_TIME,
+        label: "All Time",
+      };
+    case DateRangeEnum.LAST_30_DAYS:
+      return last30Days;
+    case DateRangeEnum.LAST_MONTH:
+      return {
+        from: startOfMonth(subMonths(now, 1)),
+        to: endOfMonth(subMonths(now, 1)),
+        value: DateRangeEnum.LAST_MONTH,
+        label: "Last Month",
+      };
+    case DateRangeEnum.LAST_3_MONTHS:
+      return {
+        from: startOfMonth(subMonths(now, 3)),
+        to: endOfMonth(subMonths(now, 1)),
+        value: DateRangeEnum.LAST_3_MONTHS,
+        label: "Last 3 Months",
+      };
+    case DateRangeEnum.LAST_YEAR:
+      return {
+        from: startOfYear(subYears(now, 1)),
+        to: endOfYear(subYears(now, 1)),
+        value: DateRangeEnum.LAST_YEAR,
+        label: "Last Year",
+      };
+    case DateRangeEnum.THIS_MONTH:
+      return {
+        from: startOfMonth(now),
+        to: endOfDay(now),
+        value: DateRangeEnum.THIS_MONTH,
+        label: "This Month",
+      };
+    case DateRangeEnum.THIS_YEAR:
+      return {
+        from: startOfYear(now),
+        to: endOfDay(now),
+        value: DateRangeEnum.THIS_YEAR,
+        label: "This Year",
+      };
+    default:
+      return last30Days;
+  }
+};
+</file>
+
+<file path="src/utils/format-currency.ts">
+// Convert dollars to cents when saving
+export function convertToCents(amount: number) {
+  return Math.round(amount * 100);
+}
+
+// Convert cents to dollars when retrieving
+//convertFromCents
+export function convertToDollarUnit(amount: number) {
+  return amount / 100;
+}
+
+export function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
+</file>
+
+<file path="src/utils/get-env.ts">
+export const getEnv = (key: string, defaultValue?: string): string => {
+  const value = process.env[key];
+  if (value === undefined) {
+    if (defaultValue === undefined) {
+      throw new Error(`Environment variable ${key} is not set`);
+    }
+    return defaultValue;
+  }
+  return value;
+};
+</file>
+
+<file path="src/utils/jwt.ts">
+import jwt, {JwtPayload, SignOptions} from 'jsonwebtoken'
+import { Env } from '../config/env.config.ts'
+
+type TimeUnit = "s" | "m" | "h" | "d" | "w" | "y";
+type TimeString = `${number}${TimeUnit}`;
+
+export type AccessTokenPayload = {
+    userId: string;
+}
+
+type SignOptsAndSecret = SignOptions & {
+    secret: string;
+    expiresIn?: TimeString | number;
+}
+
+const defaults: SignOptions ={
+    audience: ["user"],
+}
+
+const accessTokenSignOptions : SignOptsAndSecret = {
+    expiresIn: Env.JWT_EXPIRES_IN as TimeString,
+    secret: Env.JWT_SECRET
+}
+
+export const signJwtToken = (
+    payload: AccessTokenPayload,
+    options?: SignOptsAndSecret
+) => {
+    const isAccessToken = !options || options === accessTokenSignOptions;
+
+    const { secret, ...opts } = options || accessTokenSignOptions;
+
+    const token = jwt.sign(payload, secret, {
+        ...defaults,
+        ...opts,
+    });
+
+    const expiresAt = isAccessToken
+        ? (jwt.decode(token) as JwtPayload)?.exp! * 1000
+        : undefined
+
+    return {
+        token,
+        expiresAt
+    }
+}
+</file>
+
+<file path="src/validators/auth.validator.ts">
+import { email, z } from "zod";
+
+export const emailSchema = z
+  .string()
+  .trim()
+  .email("Invalid email address")
+  .min(1)
+  .max(255);
+
+export const passwordSchema = z.string().trim().min(4);
+
+export const registerSchema = z.object({
+    name : z.string().trim().min(1).max(255),
+    email: emailSchema,
+    password: passwordSchema
+});
+
+export const loginSchema = z.object({
+    email: emailSchema,
+    password: passwordSchema
+})
+
+export type RegisterSchemaType = z.infer<typeof registerSchema>;
+export type LoginSchemaType = z.infer<typeof loginSchema>;
+</file>
+
+<file path="src/validators/report.validator.ts">
+import { z } from "zod";
+
+export const reportSettingSchema = z.object({
+  isEnabled: z.boolean().default(true),
+});
+
+export const updateReportSettingSchema = reportSettingSchema.partial();
+
+export type UpdateReportSettingType = z.infer<typeof updateReportSettingSchema>;
+</file>
+
+<file path="src/validators/transaction.validator.ts">
+import { z } from "zod";
+import {
+  PaymentMethodEnum,
+  RecurringIntervalEnum,
+  TransactionTypeEnum,
+} from "../models/transaction.model.ts";
+
+export const transactionIdSchema = z.string().trim().min(1);
+
+export const baseTransactionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  type: z.nativeEnum(TransactionTypeEnum, {
+    errorMap: () => ({ message: "Transaction type must be INCOME or EXPENSE" }),
+  }),
+  amount: z.number().positive("Amount must be postive").min(1),
+  category: z.string().min(1, "Category is required"),
+  date: z
+    .union([z.string().datetime({ message: "Invalid date string" }), z.date()])
+    .transform((val) => new Date(val)),
+  isRecurring: z.boolean().default(false),
+  recurringInterval: z
+    .enum([
+      RecurringIntervalEnum.DAILY,
+      RecurringIntervalEnum.WEEKLY,
+      RecurringIntervalEnum.MONTHLY,
+      RecurringIntervalEnum.YEARLY,
+    ])
+    .nullable()
+    .optional(),
+
+  receiptUrl: z.string().optional(),
+  paymentMethod: z
+    .enum([
+      PaymentMethodEnum.CARD,
+      PaymentMethodEnum.BANK_TRANSFER,
+      PaymentMethodEnum.MOBILE_PAYMENT,
+      PaymentMethodEnum.AUTO_DEBIT,
+      PaymentMethodEnum.CASH,
+      PaymentMethodEnum.OTHER,
+    ])
+    .default(PaymentMethodEnum.CASH),
+});
+
+export const bulkDeleteTransactionSchema = z.object({
+  transactionIds: z
+    .array(z.string().length(24, "Invalid transaction ID format"))
+    .min(1, "At least one transaction ID must be provided"),
+});
+
+export const bulkTransactionSchema = z.object({
+  transactions: z
+    .array(baseTransactionSchema)
+    .min(1, "At least one transaction is required")
+    .max(300, "Must not be more than 300 transactions")
+    .refine(
+      (txs) =>
+        txs.every((tx) => {
+          const amount = Number(tx.amount);
+          return !isNaN(amount) && amount > 0 && amount <= 1_000_000_000;
+        }),
+      {
+        message: "Amount must be a postive number",
+      }
+    ),
+});
+
+export const createTransactionSchema = baseTransactionSchema;
+export const updateTransactionSchema = baseTransactionSchema.partial();
+
+export type CreateTransactionType = z.infer<typeof createTransactionSchema>;
+
+export type UpdateTransactionType = z.infer<typeof updateTransactionSchema>;
+
+export type BulkDelteTransactionType = z.infer<
+  typeof bulkDeleteTransactionSchema
+>;
+</file>
+
+<file path="src/validators/user.validator.ts">
+import { z } from "zod";
+
+export const updateUserSchema = z.object({
+  name: z.string().trim().min(1).max(255).optional(),
+});
+
+export type UpdateUserType = z.infer<typeof updateUserSchema>;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true // We use tsup for building, tsc only for type-checking
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+</file>
+
+</files>
+</file>
+
+<file path="server/src/@types/index.d.ts">
+import { UserDocument } from "../models/user.model.ts";
+
+declare global {
+    namespace Express {
+        interface User extends UserDocument {
+            _id ?: any;
+        }
+    }
+}
+</file>
+
+<file path="server/src/@types/report.type.ts">
+export type ReportType = {
+    period: string,
+    totalIncome: number;
+    totalExpenses: number;
+    availableBalance: number;
+    savingsRate: number;
+    topSpendingCategories: Array<{name:string;  percent: number}>;
+    insights: string[];
+}
+</file>
+
+<file path="server/src/config/cloudinary.config.ts">
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import { Env } from "./env.config.ts";
+import streamifier from "streamifier";
+
+// ================= CLOUDINARY CONFIG =================
+cloudinary.config({
+  cloud_name: Env.CLOUDINARY_CLOUD_NAME,
+  api_key: Env.CLOUDINARY_API_KEY,
+  api_secret: Env.CLOUDINARY_API_SECRET,
+});
+
+// ================= MULTER MEMORY STORAGE =================
+const storage = multer.memoryStorage();
+
+export const upload = multer({
+  storage,
+  limits: { fileSize: 2 * 1024 * 1024, files: 1 },
+  fileFilter: (_, file, cb) => {
+    const isValid = /^image\/(jpe?g|png)$/.test(file.mimetype);
+
+    if (!isValid) {
+      return cb(new Error("Only JPG and PNG images are allowed"));
+    }
+
+    cb(null, true);
+  },
+});
+
+// ================= CLOUDINARY UPLOAD HELPER =================
+export const uploadToCloudinary = (
+  buffer: Buffer,
+  folder = "images"
+) => {
+  return new Promise<string>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        resource_type: "image",
+        quality: "auto:good",
+      },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result?.secure_url || "");
+      }
+    );
+
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+};
+</file>
+
+<file path="server/src/config/database.config.ts">
+import mongoose from 'mongoose'
+import { Env } from './env.config.js'
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(Env.MONGO_URI, {
+            serverSelectionTimeoutMS: 8000,
+            socketTimeoutMS: 45000,
+            connectTimeoutMS: 10000
+        })
+        console.log("Connected to MongoDB database");
+    } catch (error) {
+        console.error("Error connecting to MongoDB database:", error);
+        process.exit(1)
+    }
+};
+
+export default connectDatabase
+</file>
+
+<file path="server/src/config/env.config.ts">
+import { getEnv } from "../utils/get-env.ts";
+
+const envConfig = () => ({
+  NODE_ENV: getEnv("NODE_ENV", "development"),
+
+  PORT: getEnv("PORT", "8000"),
+  BASE_PATH: getEnv("BASE_PATH", "/api"),
+  MONGO_URI: getEnv("MONGO_URI"),
+
+  JWT_SECRET: getEnv("JWT_SECRET", "secert_jwt"),
+  JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "15m") as string,
+
+  JWT_REFRESH_SECRET: getEnv("JWT_REFRESH_SECRET", "secert_jwt_refresh"),
+  JWT_REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "7d") as string,
+
+  GEMINI_API_KEY: getEnv("GEMINI_API_KEY"),
+
+  CLOUDINARY_CLOUD_NAME: getEnv("CLOUDINARY_CLOUD_NAME"),
+  CLOUDINARY_API_KEY: getEnv("CLOUDINARY_API_KEY"),
+  CLOUDINARY_API_SECRET: getEnv("CLOUDINARY_API_SECRET"),
+
+  RESEND_API_KEY: getEnv("RESEND_API_KEY"),
+  RESEND_MAILER_SENDER: getEnv("RESEND_MAILER_SENDER", ""),
+
+  STRIPE_SECRET_KEY: getEnv("STRIPE_SECRET_KEY"),
+  STRIPE_MONTHLY_PLAN_PRICE_ID: getEnv("STRIPE_MONTHLY_PLAN_PRICE_ID"),
+  STRIPE_YEARLY_PLAN_PRICE_ID: getEnv("STRIPE_YEARLY_PLAN_PRICE_ID"),
+  STRIPE_WEBHOOK_SECRET: getEnv("STRIPE_WEBHOOK_SECRET"),
+  TRIAL_DAYS: getEnv("TRIAL_DAYS", "7") as string,
+
+  FRONTEND_ORIGIN: getEnv("FRONTEND_ORIGIN", "localhost"),
+});
+
+export const Env = envConfig();
+</file>
+
+<file path="server/src/config/google-ai.ts">
+import { GoogleGenAI } from "@google/genai";
+import { Env } from "./env.config.ts";
+
+export const genAI = new GoogleGenAI({
+    apiKey: Env.GEMINI_API_KEY,
+});
+
+export const genAIModel = "gemini-3-flash-preview"
+</file>
+
+<file path="server/src/config/http.config.ts">
+const httpConfig = () => ({
+  OK: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  NO_CONTENT: 204,
+  // Client error responses
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  CONFLICT: 409,
+  UNPROCESSABLE_ENTITY: 422,
+  TOO_MANY_REQUESTS: 429,
+
+  // Server error responses
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504,
+});
+
+export const HTTPSTATUS = httpConfig();
+
+export type HttpStatusCodeType = (typeof HTTPSTATUS)[keyof typeof HTTPSTATUS];
+</file>
+
+<file path="server/src/config/passport.config.ts">
+import {
+    Strategy as JwtStrategy,
+    ExtractJwt,
+    StrategyOptions,
+} from "passport-jwt";
+import passport from "passport";
+import { Env } from "./env.config.js";
+import { findByIdUserService } from "../services/user.service.ts";
+
+interface JwtPayload {
+    userId: string;
+}
+
+const options: StrategyOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: Env.JWT_SECRET,
+    audience: ["user"],
+    algorithms: ["HS256"],
+};
+
+passport.use(
+    new JwtStrategy(options, async (payload: JwtPayload, done) => {
+        try {
+            if(!payload.userId){
+                return done(null, false, { message: "Invalid token" });
+            }
+
+            const user = await findByIdUserService(payload.userId);
+            if(!user){
+                return done(null, false, { message: "User not found" });
+            }
+
+            return done(null, user);
+        } catch (error) {
+            return done(error, false);
+        }
+    })
+);
+
+passport.serializeUser((user: any, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((user: any, done) => {
+    done(null, user);
+});
+
+export const passportAuthenticateJwt = passport.authenticate("jwt", {
+    session: false,
+});
+</file>
+
+<file path="server/src/config/resend.config.ts">
+import { Resend } from "resend";
+import { Env } from "./env.config.ts";
+
+export const resend = new Resend(Env.RESEND_API_KEY);
+</file>
+
+<file path="server/src/config/stripe.config.ts">
+import Stripe from 'stripe';
+import { Env } from './env.config.js'; 
+
+export const stripeClient = new Stripe(Env.
+    STRIPE_SECRET_KEY, {
+        apiVersion: "2026-01-28.clover",
+        typescript: true,
+        maxNetworkRetries: 3,
+        timeout: 30000
+    }
+);
+</file>
+
+<file path="server/src/controllers/analytics.controller.ts">
+import { Request, Response } from "express";
+import { asyncHandler } from "../middlewares/asyncHandler.middleware.ts";
+import { HTTPSTATUS } from "../config/http.config.ts";
+import { DateRangePreset } from "../enums/date-range.enum.ts";
+import {
+  chartAnalyticsService,
+  expensePieChartBreakdownService,
+  summaryAnalyticsService,
+} from "../services/analytics.service.ts";
+
+export const summaryAnalyticsController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+
+    const { preset, from, to } = req.query;
+
+    const filter = {
+      dateRangePreset: preset as DateRangePreset,
+      customFrom: from ? new Date(from as string) : undefined,
+      customTo: to ? new Date(to as string) : undefined,
+    };
+    const stats = await summaryAnalyticsService(
+      userId,
+      filter.dateRangePreset,
+      filter.customFrom,
+      filter.customTo
+    );
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Summary fetched successfully",
+      data: stats,
+    });
+  }
+);
+
+export const chartAnalyticsController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const { preset, from, to } = req.query;
+
+    const filter = {
+      dateRangePreset: preset as DateRangePreset,
+      customFrom: from ? new Date(from as string) : undefined,
+      customTo: to ? new Date(to as string) : undefined,
+    };
+
+    const chartData = await chartAnalyticsService(
+      userId,
+      filter.dateRangePreset,
+      filter.customFrom,
+      filter.customTo
+    );
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Chart fetched successfully",
+      data: chartData,
+    });
+  }
+);
+
+export const expensePieChartBreakdownController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const { preset, from, to } = req.query;
+
+    const filter = {
+      dateRangePreset: preset as DateRangePreset,
+      customFrom: from ? new Date(from as string) : undefined,
+      customTo: to ? new Date(to as string) : undefined,
+    };
+    const pieChartData = await expensePieChartBreakdownService(
+      userId,
+      filter.dateRangePreset,
+      filter.customFrom,
+      filter.customTo
+    );
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Expense breakdown fetched successfully",
+      data: pieChartData,
+    });
+  }
+);
+</file>
+
+<file path="server/src/controllers/auth.controller.ts">
+import { HTTPSTATUS } from "../config/http.config.ts";
+import { asyncHandler } from "../middlewares/asyncHandler.middleware.ts";
+import { Request, Response } from "express";
+import { loginSchema, registerSchema } from "../validators/auth.validator.ts";
+import { loginService, registerService } from "../services/auth.service.ts";
+
+export const registerController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const body = registerSchema.parse(req.body);
+
+        const result = await registerService(body);
+
+        return res.status(HTTPSTATUS.CREATED).json({
+            message: "User Registered Successfully",
+            data: result
+        });
+    }
+)
+
+export const loginController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const body = loginSchema.parse({
+            ...req.body
+        })
+        const { user, accessToken, expiresAt, reportSetting } =
+            await loginService(body);
+
+        return res.status(HTTPSTATUS.OK).json({ 
+            message: "User Logged In Successfully",
+            user, 
+            accessToken, 
+            expiresAt, 
+            reportSetting 
+        });
+    }
+)
+</file>
+
+<file path="server/src/controllers/billing.controller.ts">
+import { Request, Response } from "express";
+import { HTTPSTATUS } from "../config/http.config.ts";
+import { asyncHandler } from "../middlewares/asyncHandler.middleware.ts";
+import {
+    getUserSubscriptionStatusService,
+    manageSubscriptionBillingPortalService,
+    switchToSubscriptionPlanService,
+    upgradeToProSubscriptionService
+} from "../services/billing.service.ts";
+import {
+    manageSubscriptionBillingPortalSchema,
+    switchToSubscriptionPlanSchema,
+    upgradeToProSubscriptionSchema
+} from "../validators/billing.validator.ts";
+
+export const getUserSubscriptionStatusController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+
+        const {subscriptionData} = await getUserSubscriptionStatusService(userId);
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Subscription Fetched Successfully",
+            data : subscriptionData
+        })
+    }
+)
+
+export const upgradeToProSubscriptionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const body = upgradeToProSubscriptionSchema.parse(req.body);
+
+        const { url } = await upgradeToProSubscriptionService(userId, body);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Payment URL generated successfully",
+            url,
+        })
+    }
+)
+
+export const manageSubscriptionBillingPortalController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const body = manageSubscriptionBillingPortalSchema.parse(req.body);
+
+        const url = await manageSubscriptionBillingPortalService(
+            userId,
+            body.callbackUrl
+        );
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Billing Portal URL generated successfully",
+            url,
+        })
+    }
+)
+
+export const switchToSubscriptionPlanController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const body = switchToSubscriptionPlanSchema.parse(req.body);
+
+        await switchToSubscriptionPlanService(userId, body);
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Subscription plan switched Successfully",
+        })
+    }
+)
+</file>
+
+<file path="server/src/controllers/report.controller.ts">
+import { Request, Response } from "express";
+import { asyncHandler } from "../middlewares/asyncHandler.middleware.ts";
+import { HTTPSTATUS } from "../config/http.config.ts";
+import {
+  generateReportService,
+  getAllReportsService,
+  updateReportSettingService
+} from "../services/report.service.ts";
+import { updateReportSettingSchema } from "../validators/report.validator.ts";
+
+export const getAllReportsController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+
+    const pagination = {
+      pageSize: parseInt(req.query.pageSize as string) || 20,
+      pageNumber: parseInt(req.query.pageNumber as string) || 1,
+    };
+
+    const result = await getAllReportsService(userId, pagination);
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Reports history fetched successfully",
+      ...result,
+    });
+  }
+);
+
+export const updateReportSettingController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const body = updateReportSettingSchema.parse(req.body);
+
+    await updateReportSettingService(userId, body);
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Reports setting updated successfully",
+    });
+  }
+);
+
+export const generateReportController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const { from, to } = req.query;
+    const fromDate = new Date(from as string);
+    const toDate = new Date(to as string);
+
+    const result = await generateReportService(userId, fromDate, toDate);
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Report generated successfully",
+      ...result,
+    });
+  }
+);
+</file>
+
+<file path="server/src/controllers/transaction.controller.ts">
+import { Request, Response } from "express";
+import { asyncHandler } from "../middlewares/asyncHandler.middleware.ts";
+import {
+    createTransactionService,
+    getTransactionByIdService,
+    bulkDeleteTransactionService,
+    bulkTransactionService,
+    updateTransactionService,
+    deleteTransactionService,
+    duplicateTransactionService,
+    getAllTransactionService,
+} from "../services/transaction.service.ts";
+import {
+    createTransactionSchema,
+    transactionIdSchema,
+    updateTransactionSchema,
+    bulkTransactionSchema,
+    bulkDeleteTransactionSchema
+} from "../validators/transaction.validator.ts";
+import { HTTPSTATUS } from "../config/http.config.ts";
+import { TransactionTypeEnum } from "../models/transaction.model.ts";
+import { scanReceiptService } from '../services/transaction.service.ts';
+
+export const createTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const body = createTransactionSchema.parse(req.body);
+        const userId = req.user?._id;
+
+        const transaction = await createTransactionService(body, userId);
+
+        return res.status(HTTPSTATUS.CREATED).json({
+            message: "Transaction Created Successfully",
+            transaction
+        })
+    }
+);
+
+export const getAllTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+
+        const filters = {
+            keyword: req.query.keyword as string | undefined,
+            type: req.query.type as keyof typeof TransactionTypeEnum | undefined,
+            recurringStatus: req.query.recurringStatus as
+                | "RECURRING"
+                | "NON_RECURRING"
+                | undefined,
+        };
+
+        const pagination = {
+            pageSize: parseInt(req.query.pageSize as string) || 20,
+            pageNumber: parseInt(req.query.pageNumber as string) || 1,
+        };
+
+        const result = await getAllTransactionService(userId, filters, pagination);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Transactions Fetched Successfully",
+            ...result
+        });
+    }
+)
+
+export const getTransactionByIdController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const transactionId = transactionIdSchema.parse(req.params.id);
+
+        const transaction = await getTransactionByIdService(userId, transactionId);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Transaction Fetched Successfully",
+            transaction
+        });
+    }
+)
+
+export const duplicateTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const transactionId = transactionIdSchema.parse(req.params.id);
+
+        const transaction = await duplicateTransactionService(
+            userId, 
+            transactionId
+        );
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Transaction Duplicated Successfully",
+            transaction
+        });
+    }
+)
+
+export const updateTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const transactionId = transactionIdSchema.parse(req.params.id);
+        const body = updateTransactionSchema.parse(req.body);
+
+        await updateTransactionService(userId, transactionId, body);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Transaction Updated Successfully",
+        });
+    }
+)
+
+export const deleteTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const transactionId = transactionIdSchema.parse(req.params.id);
+
+        await deleteTransactionService(userId, transactionId);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Transaction Deleted Successfully",
+        });
+    }
+)
+
+export const bulkDeleteTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const { transactionIds } = bulkDeleteTransactionSchema.parse(req.body);
+
+        const result = await bulkDeleteTransactionService(userId, transactionIds);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Transactions Deleted Successfully",
+            ...result
+        });
+    }
+)
+
+export const bulkTransactionController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+        const { transactions } = bulkTransactionSchema.parse(req.body);
+
+        const result = await bulkTransactionService(userId, transactions);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Bulk Transactions Created Successfully",
+            ...result
+        });
+    }
+)
+
+export const scanReceiptController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const file = req?.file;
+
+        const result = await scanReceiptService(file);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Receipt Scanned Successfully",
+            data: result
+        });
+    }
+)
+</file>
+
+<file path="server/src/controllers/user.controller.ts">
+import { asyncHandler } from "../middlewares/asyncHandler.middleware.ts";
+import { Request, Response } from "express";
+import {
+    findByIdUserService,
+    updateUserService
+} from "../services/user.service.ts";
+import { HTTPSTATUS } from "../config/http.config.ts";
+import { updateUserSchema } from "../validators/user.validator.ts";
+
+export const getCurrentUserController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const userId = req.user?._id;
+
+        const user = await findByIdUserService(userId);
+        return res.status(HTTPSTATUS.OK).json({
+            message: "User Fetched Successfully",
+            user
+        })
+    }
+)
+
+export const updateUserController = asyncHandler(
+    async (req: Request, res: Response) => {
+        const body = updateUserSchema.parse(req.body);
+        const userId = req.user?._id
+        const profilePic = req.file
+
+        const user = await updateUserService(userId, body, profilePic);
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "User Updated Successfully",
+            user
+        })
+    }
+)
+</file>
+
+<file path="server/src/crons/index.ts">
+import { startJobs } from "./scheduler.ts";
+
+export const initializeCrons = async () => {
+  try {
+    const jobs = startJobs();
+    console.log(`⏰ ${jobs.length} cron jobs intialized`);
+    return jobs;
+  } catch (error) {
+    console.error("CRON INIT ERROR:", error);
+    return [];
+  }
+};
+</file>
+
+<file path="server/src/crons/jobs/report.job.ts">
+import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
+import ReportSettingModel from "../../models/report-setting.model.ts";
+import { UserDocument } from "../../models/user.model.ts";
+import mongoose from "mongoose";
+import { generateReportService } from "../../services/report.service.ts";
+import ReportModel, { ReportStatusEnum } from "../../models/report.model.ts";
+import { calculateNextReportDate } from "../../utils/helper.ts";
+import { sendReportEmail } from "../../mailers/report.mailer.ts";
+
+export const processReportJob = async () => {
+  const now = new Date();
+
+  let processedCount = 0;
+  let failedCount = 0;
+
+  //Today july 1, then run report for -> june 1 - 30 
+//Get Last Month because this will run on the first of the month
+  const from = startOfMonth(subMonths(now, 1));
+  const to = endOfMonth(subMonths(now, 1));
+
+  // const from = "2025-04-01T23:00:00.000Z";
+  // const to = "2025-04-T23:00:00.000Z";
+
+  try {
+    const reportSettingCursor = ReportSettingModel.find({
+      isEnabled: true,
+      nextReportDate: { $lte: now },
+    })
+      .populate<{ userId: UserDocument }>("userId")
+      .cursor();
+
+    console.log("Running report ");
+
+    for await (const setting of reportSettingCursor) {
+      const user = setting.userId as UserDocument;
+      if (!user) {
+        console.log(`User not found for setting: ${setting._id}`);
+        continue;
+      }
+
+      const session = await mongoose.startSession();
+
+      try {
+        const report = await generateReportService(user._id.toString(), from, to);
+
+        console.log(report, "resport data");
+
+        let emailSent = false;
+        if (report) {
+          try {
+            await sendReportEmail({
+              email: user.email!,
+              username: user.name!,
+              report: {
+                period: report.period,
+                totalIncome: report.summary.income,
+                totalExpenses: report.summary.expenses,
+                availableBalance: report.summary.balance,
+                savingsRate: report.summary.savingsRate,
+                topSpendingCategories: report.summary.topCategories,
+                insights: report.insights,
+              },
+              frequency: setting.frequency!,
+            });
+            emailSent = true;
+          } catch (error) {
+            console.log(`Email failed for ${user._id}`);
+          }
+        }
+
+        await session.withTransaction(
+          async () => {
+            const bulkReports: any[] = [];
+            const bulkSettings: any[] = [];
+
+            if (report && emailSent) {
+              bulkReports.push({
+                insertOne: {
+                  document: {
+                    userId: user._id,
+                    sentDate: now,
+                    period: report.period,
+                    status: ReportStatusEnum.SENT,
+                    createdAt: now,
+                    updatedAt: now,
+                  },
+                },
+              });
+
+              bulkSettings.push({
+                updateOne: {
+                  filter: { _id: setting._id },
+                  update: {
+                    $set: {
+                      lastSentDate: now,
+                      nextReportDate: calculateNextReportDate(now),
+                      updatedAt: now,
+                    },
+                  },
+                },
+              });
+            } else {
+              bulkReports.push({
+                insertOne: {
+                  document: {
+                    userId: user._id,
+                    sentDate: now,
+                    period:
+                      report?.period ||
+                      `${format(from, "MMMM d")}–${format(to, "d, yyyy")}`,
+                    status: report
+                      ? ReportStatusEnum.FAILED
+                      : ReportStatusEnum.NO_ACTIVITY,
+                    createdAt: now,
+                    updatedAt: now,
+                  },
+                },
+              });
+
+              bulkSettings.push({
+                updateOne: {
+                  filter: { _id: setting._id },
+                  update: {
+                    $set: {
+                      lastSentDate: null,
+                      nextReportDate: calculateNextReportDate(now),
+                      updatedAt: now,
+                    },
+                  },
+                },
+              });
+            }
+
+            await Promise.all([
+              ReportModel.bulkWrite(bulkReports, { ordered: false }),
+              ReportSettingModel.bulkWrite(bulkSettings, { ordered: false }),
+            ]);
+          },
+          {
+            maxCommitTimeMS: 10000,
+          }
+        );
+
+        processedCount++;
+      } catch (error) {
+        console.log(`Failed to process report`, error);
+        failedCount++;
+      } finally {
+        await session.endSession();
+      }
+    }
+
+    console.log(`✅Processed: ${processedCount} report`);
+    console.log(`❌ Failed: ${failedCount} report`);
+
+    return {
+      success: true,
+      processedCount,
+      failedCount,
+    };
+  } catch (error) {
+    console.error("Error processing reports", error);
+    return {
+      success: false,
+      error: "Report process failed",
+    };
+  }
+};
+</file>
+
+<file path="server/src/crons/jobs/transaction.job.ts">
+import mongoose from "mongoose";
+import TransactionModel from "../../models/transaction.model.ts";
+import { calculateNextOccurrence } from "../../utils/helper.ts";
+
+export const processRecurringTransactions = async () => {
+  const now = new Date();
+  let processedCount = 0;
+  let failedCount = 0;
+
+  try {
+    const transactionCursor = TransactionModel.find({
+      isRecurring: true,
+      nextRecurringDate: { $lte: now },
+    }).cursor();
+
+    console.log("Starting recurring proccess");
+
+    for await (const tx of transactionCursor) {
+      const nextDate = calculateNextOccurrence(
+        tx.nextRecurringDate!,
+        tx.recurringInterval!
+      );
+
+      const session = await mongoose.startSession();
+      try {
+        await session.withTransaction(
+          async () => {
+            // console.log(tx, "transaction");
+            const { _id, createdAt, updatedAt, __v, ...rest } = tx.toObject();
+            await TransactionModel.create(
+              [
+                {
+                  ...rest,
+                  _id: new mongoose.Types.ObjectId(),
+                  title: `Recurring - ${tx.title}`,
+                  date: tx.nextRecurringDate!,
+                  isRecurring: false,
+                  nextRecurringDate: null,
+                  recurringInterval: null,
+                  lastProcessed: null,
+                },
+              ],
+              { session }
+            );
+
+            await TransactionModel.updateOne(
+              { _id: tx._id },
+              {
+                $set: {
+                  nextRecurringDate: nextDate,
+                  lastProcessed: now,
+                },
+              },
+              { session }
+            );
+          },
+          {
+            maxCommitTimeMS: 20000,
+          }
+        );
+
+        processedCount++;
+      } catch (error: any) {
+        failedCount++;
+        console.log(`Failed reccurring tx: ${tx._id}`, error);
+      } finally {
+        await session.endSession();
+      }
+    }
+
+    console.log(`✅Processed: ${processedCount} transaction`);
+    console.log(`❌ Failed: ${failedCount} transaction`);
+
+    return {
+      success: true,
+      processedCount,
+      failedCount,
+    };
+  } catch (error: any) {
+    console.error("Error occur processing transaction", error);
+
+    return {
+      success: false,
+      error: error?.message,
+    };
+  }
+};
+</file>
+
+<file path="server/src/crons/scheduler.ts">
+import cron from "node-cron";
+import { processRecurringTransactions } from "./jobs/transaction.job.ts";
+import { processReportJob } from "./jobs/report.job.ts";
+
+const scheduleJob = (name: string, time: string, job: Function) => {
+  console.log(`Scheduling ${name} at ${time}`);
+
+  return cron.schedule(
+    time,
+    async () => {
+      try {
+        await job();
+        console.log(`${name} completed`);
+      } catch (error) {
+        console.log(`${name} failed`, error);
+      }
+    },
+    {
+    //   scheduled: true,
+      timezone: "UTC",
+    }
+  );
+};
+
+export const startJobs = () => {
+  return [
+    scheduleJob("Transactions", "5 0 * * *", processRecurringTransactions),
+
+    //run 2:30am every first of the month
+    scheduleJob("Reports", "30 2 1 * *", processReportJob),
+  ];
+};
+</file>
+
+<file path="server/src/enums/date-range.enum.ts">
+export enum DateRangeEnum {
+  LAST_30_DAYS = "30days",
+  LAST_MONTH = "lastMonth",
+  LAST_3_MONTHS = "last3Months",
+  LAST_YEAR = "lastYear",
+  THIS_MONTH = "thisMonth",
+  THIS_YEAR = "thisYear",
+  ALL_TIME = "allTime",
+  CUSTOM = "custom",
+}
+
+export type DateRangePreset = `${DateRangeEnum}`;
+</file>
+
+<file path="server/src/enums/error-code.enum.ts">
+export const ErrorCodeEnum = {
+  ACCESS_UNAUTHORIZED: "ACCESS_UNAUTHORIZED",
+
+  AUTH_USER_NOT_FOUND: "AUTH_USER_NOT_FOUND",
+
+  AUTH_EMAIL_ALREADY_EXISTS: "AUTH_EMAIL_ALREADY_EXISTS",
+  AUTH_INVALID_TOKEN: "AUTH_INVALID_TOKEN",
+
+  AUTH_NOT_FOUND: "AUTH_NOT_FOUND",
+  AUTH_TOO_MANY_ATTEMPTS: "AUTH_TOO_MANY_ATTEMPTS",
+  AUTH_UNAUTHORIZED_ACCESS: "AUTH_UNAUTHORIZED_ACCESS",
+  AUTH_TOKEN_NOT_FOUND: "AUTH_TOKEN_NOT_FOUND",
+  // Validation and Resource Errors
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+  RESOURCE_NOT_FOUND: "RESOURCE_NOT_FOUND",
+  FILE_UPLOAD_ERROR: "FILE_UPLOAD_ERROR",
+
+  // System Errors
+  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+} as const;
+
+export type ErrorCodeEnumType = keyof typeof ErrorCodeEnum;
+</file>
+
+<file path="server/src/eslint.config.ts">
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+  { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },
+  tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+]);
+</file>
+
+<file path="server/src/index.ts">
+import "dotenv/config"
+import './config/passport.config.ts'
+import express, { NextFunction, Response, Request } from 'express'
+import { Env } from "./config/env.config.js"
+import cors from 'cors'
+import passport from "passport"
+import { HTTPSTATUS } from "./config/http.config.js";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
+import { BadRequestException } from "./utils/app-error.js";
+import { asyncHandler } from "./middlewares/asyncHandler.middleware.js";
+import connectDatabase from "./config/database.config.js";
+import authRoutes from "./routes/auth.route.ts";
+import userRoutes from "./routes/user.route.ts";
+import { passportAuthenticateJwt } from "./config/passport.config.ts"
+import transactionRoutes from "./routes/transaction.route.ts"
+import reportRoutes from "./routes/report.route.ts"
+import analyticsRoutes from "./routes/analytics.route.ts"
+import { initializeCrons } from "./crons/index.ts"
+import { getDateRange } from "./utils/date.ts"
+import billingRoutes from "./routes/billing.routes.ts"
+import webhookRoutes from "./routes/webhook.route.ts"
+
+const app = express();
+const BASE_PATH = Env.BASE_PATH;
+
+app.use("/webhook",webhookRoutes)
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use(passport.initialize())
+
+app.use(
+    cors({
+        origin: Env.FRONTEND_ORIGIN,
+        credentials: true,
+    })
+)
+
+app.get(
+    "/",
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+        throw new BadRequestException("This is a test error");
+        res.status(HTTPSTATUS.OK).json({
+            message: "Hello Subcribe to the channel",
+        });
+    })
+);
+
+app.use(`${BASE_PATH}/auth`, authRoutes);
+app.use(`${BASE_PATH}/user`, passportAuthenticateJwt, userRoutes);
+app.use(`${BASE_PATH}/transaction`, passportAuthenticateJwt, transactionRoutes);
+app.use(`${BASE_PATH}/report`, passportAuthenticateJwt, reportRoutes);
+app.use(`${BASE_PATH}/analytics`, passportAuthenticateJwt, analyticsRoutes);
+app.use(`${BASE_PATH}/billing`, passportAuthenticateJwt, billingRoutes);
+
+app.use(errorHandler)
+
+app.listen(Env.PORT, async () => {
+    await connectDatabase();
+
+      if (Env.NODE_ENV === "development") {
+        await initializeCrons();
+      }
+
+    console.log(`Server is running on port ${Env.PORT} in ${Env.NODE_ENV} mode`);
+});
+</file>
+
+<file path="server/src/mailers/mailer.ts">
+import { Env } from "../config/env.config.ts";
+import { resend } from "../config/resend.config.ts";
+
+type Params = {
+  to: string | string[];
+  subject: string;
+  text: string;
+  html: string;
+  from?: string;
+};
+
+const mailer_sender = `Fintrak <${Env.RESEND_MAILER_SENDER}>`;
+
+export const sendEmail = async ({
+  to,
+  from = mailer_sender,
+  subject,
+  text,
+  html,
+}: Params) => {
+  return await resend.emails.send({
+    from,
+    to: Array.isArray(to) ? to : [to],
+    text,
+    subject,
+    html,
+  });
+};
+</file>
+
+<file path="server/src/mailers/report.mailer.ts">
+import { formatCurrency } from "../utils/format-currency.ts";
+import { getReportEmailTemplate } from "./templates/report.template.ts";
+import { sendEmail } from "./mailer.ts";
+import { ReportType } from "../@types/report.type.ts";
+
+type ReportEmailParams = {
+  email: string;
+  username: string;
+  report: ReportType;
+  frequency: string;
+};
+
+export const sendReportEmail = async (params: ReportEmailParams) => {
+  const { email, username, report, frequency } = params;
+  const html = getReportEmailTemplate(
+    {
+      username,
+      ...report,
+    },
+    frequency
+  );
+
+  const text = `Your ${frequency} Financial Report (${report.period})
+    Income: ${formatCurrency(report.totalIncome)}
+    Expenses: ${formatCurrency(report.totalExpenses)}
+    Balance: ${formatCurrency(report.availableBalance)}
+    Savings Rate: ${report.savingsRate.toFixed(2)}%
+
+    ${report.insights.join("\n")}
+`;
+
+  console.log(text, "text mail");
+
+  return sendEmail({
+    to: email,
+    subject: `${frequency} Financial Report - ${report.period}`,
+    text,
+    html,
+  });
+};
+</file>
+
+<file path="server/src/mailers/templates/report.template.ts">
+import { ReportType } from "../../@types/report.type.ts";
+import { formatCurrency } from "../../utils/format-currency.ts";
+import { capitalizeFirstLetter } from "../../utils/helper.ts";
+
+export const getReportEmailTemplate = (
+  reportData: ReportType & { username: string },
+  frequency: string
+) => {
+  const {
+    username,
+    period,
+    totalIncome,
+    totalExpenses,
+    availableBalance,
+    savingsRate,
+    topSpendingCategories,
+    insights,
+  } = reportData;
+
+  const reportTitle = `${capitalizeFirstLetter(frequency)} Report`;
+
+  const categoryList = topSpendingCategories
+    .map(
+      (cat: any) => `<li>
+      ${cat.name} - ${formatCurrency(cat.amount)} (${cat.percent}%)
+      </li>
+    `
+    )
+    .join("");
+
+  const insightsList = insights
+    .map((insight: string) => `<li>${insight}</li>`)
+    .join("");
+
+  const currentYear = new Date().getFullYear();
+  return `
+  <!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <title>${reportTitle}</title>
+     <!-- Google Fonts Link -->
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+   </head>
+   <body style="margin: 0; padding: 0; font-family: 'Roboto', Arial, sans-serif; background-color: #f7f7f7; font-size: 16px;">
+     <table cellpadding="0" cellspacing="0" width="100%" style="background-color: #f7f7f7; padding: 20px;">
+       <tr>
+         <td>
+           <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+             <tr>
+               <td style="background-color: #00bc7d; padding: 20px 30px; color: #ffffff; text-align: center;">
+                 <h2 style="margin: 0; font-size: 24px; text-transform: capitalize">${reportTitle}</h2>
+               </td>
+             </tr>
+             <tr>
+               <td style="padding: 20px 30px;">
+                 <p style="margin: 0 0 10px; font-size: 16px;">Hi <strong>${username}</strong>,</p>
+                 <p style="margin: 0 0 20px; font-size: 16px;">Here's your financial summary for <strong>${period}</strong>.</p>
+ 
+                 <table width="100%" style="border-collapse: collapse;">
+                   <tr>
+                     <td style="padding: 8px 0; font-size: 16px;"><strong>Total Income:</strong></td>
+                     <td style="text-align: right; font-size: 16px;">${formatCurrency(totalIncome)}</td>
+                   </tr>
+                   <tr>
+                     <td style="padding: 8px 0; font-size: 16px;"><strong>Total Expenses:</strong></td>
+                     <td style="text-align: right; font-size: 16px;">${formatCurrency(totalExpenses)}</td>
+                   </tr>
+                   <tr>
+                     <td style="padding: 8px 0; font-size: 16px;"><strong>Available Balance:</strong></td>
+                     <td style="text-align: right; font-size: 16px;">${formatCurrency(availableBalance)}</td>
+                   </tr>
+                   <tr>
+                     <td style="padding: 8px 0; font-size: 16px;"><strong>Savings Rate:</strong></td>
+                     <td style="text-align: right; font-size: 16px;">${savingsRate.toFixed(2)}%</td>
+                   </tr>
+                 </table>
+                 <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;" />
+                 <h4 style="margin: 0 0 10px; font-size: 16px;">Top Spending Categories</h4>
+                 <ul style="padding-left: 20px; margin: 0; font-size: 16px;">
+                   ${categoryList}
+                 </ul>
+                 <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;" />
+                 <h4 style="margin: 0 0 10px; font-size: 16px;">Insights</h4>
+                 <ul style="padding-left: 20px; margin: 0; font-size: 16px;">
+                   ${insightsList}
+                 </ul>
+                 <p style="margin-top: 30px; font-size: 13px; color: #888;">This report was generated automatically based on your recent activity.</p>
+               </td>
+             </tr>
+             <tr>
+               <td style="background-color: #f0f0f0; text-align: center; padding: 15px; font-size: 12px; color: #999;">
+                 &copy; ${currentYear} FinTrak. All rights reserved.
+               </td>
+             </tr>
+           </table>
+         </td>
+       </tr>
+     </table>
+   </body>
+ </html>
+   `;
+};
+</file>
+
+<file path="server/src/middlewares/asyncHandler.middleware.ts">
+import { Request, Response, NextFunction } from "express";
+
+type AsyncControllerType = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => Promise<any>;
+
+export const asyncHandler =
+  (controller: AsyncControllerType): AsyncControllerType =>
+  async (req, res, next) => {
+    try {
+      await controller(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+</file>
+
+<file path="server/src/middlewares/errorHandler.middleware.ts">
+import { ErrorRequestHandler } from "express"
+import { HTTPSTATUS } from "../config/http.config.js";
+import { AppError } from "../utils/app-error.js";
+import { Response } from "express";
+import { ZodError, z } from "zod";
+import { ErrorCodeEnum } from "../enums/error-code.enum.ts";
+import { MulterError } from "multer";
+
+const formatZodError = (res: Response, error: z.ZodError) => {
+    const errors = error?.issues?.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+    }));
+    return res.status(HTTPSTATUS.BAD_REQUEST).json({
+        message: "Validation Error",
+        errorCode: ErrorCodeEnum.VALIDATION_ERROR,
+        errors: errors
+    })
+}
+
+const handleMulterError = (error: MulterError) => {
+    const messages = {
+        LIMIT_UNEXPECTED_FILE: "Invalid file field name. Please use 'file",
+        LIMIT_FILE_SIZE: "File size limit exceeded",
+        LIMIT_FILE_COUNT: "File count limit exceeded",
+        default: "File upload error"
+    };
+
+    return {
+        status: HTTPSTATUS.BAD_REQUEST,
+        message: messages[error.code as keyof typeof messages] || messages.default,
+        error: error.message
+    }
+}
+
+export const errorHandler: ErrorRequestHandler = (
+    error,
+    req,
+    res,
+    next
+): any => {
+    console.log("Error occured on PATH: ", req.path, "Error: ", error);
+
+    if(error instanceof ZodError) {
+        return formatZodError(res, error)
+    }
+
+    if(error instanceof MulterError) {  
+        const { status, message, error: err } = handleMulterError(error);
+        return res.status(status).json({
+            message,
+            error: err,
+            errorCode: ErrorCodeEnum.FILE_UPLOAD_ERROR
+        })
+    }
+
+    if (error instanceof AppError) {
+        return res.status(error.statusCode).json({
+            message: error.message,
+            errorCode: error.errorCode
+        })
+    }
+
+    return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+        message: "Intenal Server Error",
+        error: error?.message || "Unknown error occurred"
+    })
+}
+</file>
+
+<file path="server/src/models/report-setting.model.ts">
+import mongoose from "mongoose";
+
+export enum ReportFrequencyEnum {
+  MONTHLY = "MONTHLY",
+}
+
+export interface ReportSettingDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  frequency: keyof typeof ReportFrequencyEnum;
+  isEnabled: boolean;
+  nextReportDate?: Date;
+  lastSentDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const reportSettingSchema = new mongoose.Schema<ReportSettingDocument>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    frequency: {
+      type: String,
+      enum: Object.values(ReportFrequencyEnum),
+      default: ReportFrequencyEnum.MONTHLY,
+    },
+    isEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    nextReportDate: {
+      type: Date,
+    },
+    lastSentDate: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ReportSettingModel = mongoose.model<ReportSettingDocument>(
+  "ReportSetting",
+  reportSettingSchema
+);
+
+export default ReportSettingModel;
+</file>
+
+<file path="server/src/models/report.model.ts">
+import mongoose from "mongoose";
+
+export enum ReportStatusEnum {
+    SENT = "SENT",
+    PENDING = "PENDING",
+    FAILED = "FAILED",
+    NO_ACTIVITY = "NO_ACTIVITY",
+}
+
+export interface ReportDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  period: string;
+  sentDate: Date;
+  status: keyof typeof ReportStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const reportSchema = new mongoose.Schema<ReportDocument>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    period: {
+      type: String,
+      required: true,
+    },
+    sentDate: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: Object.values(ReportStatusEnum),
+      default: ReportStatusEnum.PENDING,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const ReportModel = mongoose.model<ReportDocument>("Report", reportSchema);
+export default ReportModel;
+</file>
+
+<file path="server/src/models/subscription.model.ts">
+import mongoose, { Schema } from "mongoose";
+import { Env } from "../config/env.config.ts";
+
+export enum SubscripionStatus {
+    ACTIVE = 'active',
+    CHECKOUT_INITIATED = 'checkout_initiated',
+    TRIALING = 'trialing',
+    PAST_DUES = 'past_due',
+    CANCELLED = 'cancelled',
+    TRIAL_EXPIRED = 'trial_expired',
+    PAYMENT_FAILED = 'payment_failed'
+}
+
+export enum SubscriptionPlanEnum {
+    MONTHLY = 'monthly',
+    YEARLY = 'yearly'
+}
+
+
+export enum SubscriptionPriceEnum {
+    MONTHLY = 999,
+    YEARLY = 9999
+}
+
+export type SubscriptionStatusType = `${SubscripionStatus}`;
+export type SubscriptionPlanType = `${SubscriptionPlanEnum}`;
+export type SubscriptionPriceType = `${SubscriptionPriceEnum}`
+
+export interface SubscriptionDocument extends Document {
+    userId: mongoose.Types.ObjectId;
+    stripeSubscriptionId: string | null;
+    stripePriceId: string | null;
+    stripeCurrentPeriodStart: Date | null;
+    stripeCurrentPeriodEnd: Date | null;
+    trialStartsAt: Date;
+    trialEndsAt: Date;
+    trialDays: number;
+    plan: SubscriptionPlanType | null;
+    status: SubscriptionStatusType;
+    upgradedAt: Date | null;
+    cancelledAt: Date | null;
+    metadata?: Record<string, any>;
+    createdAt: Date;
+    updatedAt: Date;
+    isTrialActive(): boolean
+}
+
+const subscriptionSchema = new Schema<SubscriptionDocument>({
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
+    stripeSubscriptionId: {
+        type: String,
+        default: null,
+    },
+    stripePriceId: {
+        type: String,
+        default: null,
+    },
+    stripeCurrentPeriodStart: {
+        type: Date,
+        default: null,
+    },
+    stripeCurrentPeriodEnd: {
+        type: Date,
+        required: false,
+    },
+    trialStartsAt: {
+        type: Date,
+        required: true,
+        default: () => new Date(),
+    },
+    trialEndsAt: {
+        type: Date,
+        required: true,
+    },
+    trialDays: {
+        type: Number,
+        default: Number(Env.TRIAL_DAYS),
+    },
+    plan: {
+        type: String,
+        enum: Object.values(SubscriptionPlanEnum),
+    },
+    status: {
+        type: String,
+        enum: Object.values(SubscripionStatus),
+        required: true,
+        default: SubscripionStatus.TRIALING, // optional, but helpful
+    },
+    upgradedAt: {
+        type: Date,
+        default: null,
+    },
+    cancelledAt: {
+        type: Date,
+        default: null,
+    },
+    metadata: {
+        type: Schema.Types.Mixed,
+        default: {},
+    },
+},
+    {
+        timestamps: true
+    }
+)
+
+subscriptionSchema.methods.isTrialActive = function () {
+    if (!this.trialEndsAt || this.status !== SubscripionStatus.TRIALING) {
+        return false;
+    };
+    return new Date() < this.trialEndsAt;
+};
+
+const SubscriptionModel = mongoose.model<SubscriptionDocument>("Subscription", subscriptionSchema);
+export default SubscriptionModel;
+</file>
+
+<file path="server/src/models/transaction.model.ts">
+import mongoose, { Schema } from "mongoose";
+import { convertToCents, convertToDollarUnit } from "../utils/format-currency.ts";
+
+export enum TransactionStatusEnum {
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+}
+
+export enum RecurringIntervalEnum {
+  DAILY = "DAILY",
+  WEEKLY = "WEEKLY",
+  MONTHLY = "MONTHLY",
+  YEARLY = "YEARLY",
+}
+
+export enum TransactionTypeEnum {
+  INCOME = "INCOME",
+  EXPENSE = "EXPENSE",
+}
+
+export enum PaymentMethodEnum {
+  CARD = "CARD",
+  BANK_TRANSFER = "BANK_TRANSFER",
+  MOBILE_PAYMENT = "MOBILE_PAYMENT",
+  AUTO_DEBIT = "AUTO_DEBIT",
+  CASH = "CASH",
+  OTHER = "OTHER",
+}
+
+export interface TransactionDocument extends Document {
+  userId: mongoose.Types.ObjectId;
+  type: keyof typeof TransactionTypeEnum;
+  title: string;
+  amount: number;
+  category: string;
+  receiptUrl?: string;
+  recurringInterval?: keyof typeof RecurringIntervalEnum | null;
+  nextRecurringDate?: Date | null;
+  lastProcessed?: Date | null;
+  isRecurring: boolean;
+  description?: string;
+  date: Date;
+  status: keyof typeof TransactionStatusEnum;
+  paymentMethod: keyof typeof PaymentMethodEnum;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const transactionSchema = new Schema<TransactionDocument>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: Object.values(TransactionTypeEnum),
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+      set: (value: number) => convertToCents(value),
+      get: (value: number) => convertToDollarUnit(value),
+    },
+
+    description: {
+      type: String,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    receiptUrl: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    isRecurring: {
+      type: Boolean,
+      default: false,
+    },
+    recurringInterval: {
+      type: String,
+      enum: Object.values(RecurringIntervalEnum),
+      default: null,
+    },
+    nextRecurringDate: {
+      type: Date,
+      default: null,
+    },
+    lastProcessed: {
+      type: Date,
+      default: null,
+    },
+    status: {
+      type: String,
+      enum: Object.values(TransactionStatusEnum),
+      default: TransactionStatusEnum.COMPLETED,
+    },
+    paymentMethod: {
+      type: String,
+      enum: Object.values(PaymentMethodEnum),
+      default: PaymentMethodEnum.CASH,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true, getters: true },
+    toObject: { virtuals: true, getters: true },
+  }
+);
+
+const TransactionModel = mongoose.model<TransactionDocument>(
+  "Transaction",
+  transactionSchema
+);
+
+export default TransactionModel;
+</file>
+
+<file path="server/src/models/user.model.ts">
+import mongoose, { Document, Schema } from 'mongoose'
+import { compareValue, hashValue } from '../utils/bcrypt.ts'
+
+export interface UserDocument extends Document {
+    name: string
+    email: string
+    password: string
+    profilePicture: string | null
+    subscriptionId: mongoose.Types.ObjectId
+    stripeCustomerId?: string
+    createdAt: Date
+    updatedAt: Date
+
+    comparePassword: (password: string) => Promise<boolean>
+    omitPassword: () => Omit<UserDocument, 'password'>
+}
+
+const userSchema = new Schema<UserDocument>(
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            lowercase: true,
+        },
+        profilePicture: {
+            type: String,
+            default: null,
+        },
+        password: {
+            type: String,
+            select: true,
+            required: true,
+        },
+        subscriptionId: {
+            type: Schema.Types.ObjectId,
+            ref: "Subscription",
+        },
+        stripeCustomerId: {
+            type: String,
+            default: null,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+userSchema.pre("save", async function (next) {
+    if (this.isModified("password")) {
+        if (this.password) {
+            this.password = await hashValue(this.password);
+        }
+    }
+    // next();
+})
+
+userSchema.methods.omitPassword = function (): Omit<UserDocument, "password"> {
+    const userObject = this.toObject();
+    delete userObject.password;
+    delete userObject.stripeCustomerId;
+    return userObject;
+};
+
+userSchema.methods.comparePassword = async function (password: string) {
+    return compareValue(password, this.password)
+}
+
+const UserModel = mongoose.model<UserDocument>("User", userSchema);
+export default UserModel
+</file>
+
+<file path="server/src/routes/analytics.route.ts">
+import { Router } from "express";
+import {
+  chartAnalyticsController,
+  expensePieChartBreakdownController,
+  summaryAnalyticsController,
+} from "../controllers/analytics.controller.ts";
+
+const analyticsRoutes = Router();
+
+analyticsRoutes.get("/summary", summaryAnalyticsController);
+analyticsRoutes.get("/chart", chartAnalyticsController);
+analyticsRoutes.get("/expense-breakdown", expensePieChartBreakdownController);
+
+export default analyticsRoutes;
+</file>
+
+<file path="server/src/routes/auth.route.ts">
+import { Router } from "express";
+import { registerController, loginController } from "../controllers/auth.controller.ts";
+
+const authRoutes = Router();
+
+authRoutes.post("/register", registerController)
+authRoutes.post("/login", loginController)
+
+export default authRoutes
+</file>
+
+<file path="server/src/routes/billing.routes.ts">
+import { Router } from "express";
+import { 
+    getUserSubscriptionStatusController,
+    manageSubscriptionBillingPortalController, 
+    switchToSubscriptionPlanController, 
+    upgradeToProSubscriptionController 
+} from "../controllers/billing.controller.ts";
+
+const billingRoutes = Router();
+
+billingRoutes.post("/subscription/upgrade", upgradeToProSubscriptionController);
+
+billingRoutes.post("/subscription/billing-portal", manageSubscriptionBillingPortalController);
+
+billingRoutes.get("/subscription/status", getUserSubscriptionStatusController);
+
+billingRoutes.post("/subscription/switch-plan", switchToSubscriptionPlanController);
+
+export default billingRoutes
+</file>
+
+<file path="server/src/routes/report.route.ts">
+import { Router } from "express";
+import {
+  generateReportController,
+  getAllReportsController,
+  updateReportSettingController,
+} from "../controllers/report.controller.ts";
+
+const reportRoutes = Router();
+
+reportRoutes.get("/all", getAllReportsController);
+reportRoutes.get("/generate", generateReportController);
+reportRoutes.put("/update-setting", updateReportSettingController);
+
+export default reportRoutes;
+</file>
+
+<file path="server/src/routes/transaction.route.ts">
+import { Router } from "express";
+import { 
+    bulkDeleteTransactionController,
+    bulkTransactionController,
+    createTransactionController,
+    deleteTransactionController,
+    duplicateTransactionController,
+    getAllTransactionController,
+    getTransactionByIdController,
+    updateTransactionController,
+    scanReceiptController
+} from "../controllers/transaction.controller.ts";
+import { upload } from "../config/cloudinary.config.ts";
+
+const transactionRoutes = Router();
+
+transactionRoutes.post("/create", createTransactionController);
+
+transactionRoutes.post("/scan-receipt", upload.single("receipt"), scanReceiptController);
+
+transactionRoutes.post("/bulk-transaction", bulkTransactionController);
+
+transactionRoutes.put("/duplicate/:id", duplicateTransactionController);
+transactionRoutes.put("/update/:id", updateTransactionController);
+
+transactionRoutes.get("/all", getAllTransactionController);
+transactionRoutes.get("/:id", getTransactionByIdController);
+transactionRoutes.delete("/delete/:id", deleteTransactionController);
+transactionRoutes.delete("/bulk-delete", bulkDeleteTransactionController);
+
+export default transactionRoutes;
+</file>
+
+<file path="server/src/routes/user.route.ts">
+import { Router } from "express";
+import { 
+    getCurrentUserController, 
+    updateUserController 
+} from "../controllers/user.controller.ts";
+
+const userRoutes = Router();
+
+userRoutes.get("/current-user", getCurrentUserController);
+// userRoutes.put(
+//     "/update",
+//     upload.single("profilePic"),
+//     updateUserController
+// )
+
+export default userRoutes
+</file>
+
+<file path="server/src/routes/webhook.route.ts">
+import express, { Request, Response, Router } from "express";
+import { stripeWebHookHandler } from "../webhooks/stripe.webhook.ts";
+
+const webhookRoutes = Router();
+
+webhookRoutes.post(
+    "/stripe",
+    express.raw({ type: "application/json" }),
+    async(req: Request, res: Response) => {
+        await stripeWebHookHandler(req, res)
+    }
+)
+
+export default webhookRoutes
+</file>
+
+<file path="server/src/services/analytics.service.ts">
+import mongoose, { PipelineStage } from "mongoose";
+import { DateRangeEnum, DateRangePreset } from "../enums/date-range.enum.ts";
+import TransactionModel, {
+  TransactionTypeEnum,
+} from "../models/transaction.model.ts";
+import { getDateRange } from "../utils/date.ts";
+import { differenceInDays, subDays, subYears } from "date-fns";
+import { convertToDollarUnit } from "../utils/format-currency.ts";
+
+export const summaryAnalyticsService = async (
+  userId: string,
+  dateRangePreset?: DateRangePreset,
+  customFrom?: Date,
+  customTo?: Date
+) => {
+  const range = getDateRange(dateRangePreset, customFrom, customTo);
+
+  const { from, to, value: rangeValue } = range;
+
+  const currentPeriodPipeline: PipelineStage[] = [
+    {
+      $match: {
+        userId: new mongoose.Types.ObjectId(userId),
+        ...(from &&
+          to && {
+            date: {
+              $gte: from,
+              $lte: to,
+            },
+          }),
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalIncome: {
+          $sum: {
+            $cond: [
+              { $eq: ["$type", TransactionTypeEnum.INCOME] },
+              { $abs: "$amount" },
+              0,
+            ],
+          },
+        },
+        totalExpenses: {
+          $sum: {
+            $cond: [
+              { $eq: ["$type", TransactionTypeEnum.EXPENSE] },
+              { $abs: "$amount" },
+              0,
+            ],
+          },
+        },
+
+        transactionCount: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        totalIncome: 1,
+        totalExpenses: 1,
+        transactionCount: 1,
+
+        availableBalance: { $subtract: ["$totalIncome", "$totalExpenses"] },
+
+        savingData: {
+          $let: {
+            vars: {
+              income: { $ifNull: ["$totalIncome", 0] },
+              expenses: { $ifNull: ["$totalExpenses", 0] },
+            },
+            in: {
+              // ((income - expenses) / income) * 100;
+              savingsPercentage: {
+                $cond: [
+                  { $lte: ["$$income", 0] },
+                  0,
+                  {
+                    $multiply: [
+                      {
+                        $divide: [
+                          { $subtract: ["$$income", "$$expenses"] },
+                          "$$income",
+                        ],
+                      },
+                      100,
+                    ],
+                  },
+                ],
+              },
+
+              //Expense Ratio = (expenses / income) * 100
+              expenseRatio: {
+                $cond: [
+                  { $lte: ["$$income", 0] },
+                  0,
+                  {
+                    $multiply: [
+                      {
+                        $divide: ["$$expenses", "$$income"],
+                      },
+                      100,
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+  ];
+
+  const [current] = await TransactionModel.aggregate(currentPeriodPipeline);
+
+  const {
+    totalIncome = 0,
+    totalExpenses = 0,
+    availableBalance = 0,
+    transactionCount = 0,
+    savingData = {
+      expenseRatio: 0,
+      savingsPercentage: 0,
+    },
+  } = current || {};
+
+  console.log(current, "current");
+
+  let percentageChange: any = {
+    income: 0,
+    expenses: 0,
+    balance: 0,
+    prevPeriodFrom: null,
+    prevPeriodTo: null,
+    previousValues: {
+      incomeAmount: 0,
+      expenseAmount: 0,
+      balanceAmount: 0,
+    },
+  };
+
+  if (from && to && rangeValue !== DateRangeEnum.ALL_TIME) {
+    //last 30 days  previous las 30 days,
+
+    const period = differenceInDays(to, from) + 1;
+    console.log(`${differenceInDays(to, from)}`, period, "period");
+
+    const isYearly = [
+      DateRangeEnum.LAST_YEAR,
+      DateRangeEnum.THIS_YEAR,
+    ].includes(rangeValue);
+
+    const prevPeriodFrom = isYearly ? subYears(from, 1) : subDays(from, period);
+
+    const prevPeriodTo = isYearly ? subYears(to, 1) : subDays(to, period);
+    console.log(prevPeriodFrom, prevPeriodTo, "Prev date");
+
+    const prevPeriodPipeline = [
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(userId),
+          date: {
+            $gte: prevPeriodFrom,
+            $lte: prevPeriodTo,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalIncome: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", TransactionTypeEnum.INCOME] },
+                { $abs: "$amount" },
+                0,
+              ],
+            },
+          },
+          totalExpenses: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", TransactionTypeEnum.EXPENSE] },
+                { $abs: "$amount" },
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ];
+
+    const [previous] = await TransactionModel.aggregate(prevPeriodPipeline);
+
+    console.log(previous, "Prvious Data");
+    if (previous) {
+      const prevIncome = previous.totalIncome || 0;
+      const prevExpenses = previous.totalExpenses || 0;
+      const prevBalance = prevIncome - prevExpenses;
+
+      const currentIncome = totalIncome;
+      const currentExpenses = totalExpenses;
+      const currentBalance = availableBalance;
+
+      percentageChange = {
+        income: calaulatePercentageChange(prevIncome, currentIncome),
+        expenses: calaulatePercentageChange(prevExpenses, currentExpenses),
+        balance: calaulatePercentageChange(prevBalance, currentBalance),
+        prevPeriodFrom: prevPeriodFrom,
+        prevPeriodTo: prevPeriodTo,
+        previousValues: {
+          incomeAmount: prevIncome,
+          expenseAmount: prevExpenses,
+          balanceAmount: prevBalance,
+        },
+      };
+    }
+  }
+
+  return {
+    availableBalance: convertToDollarUnit(availableBalance),
+    totalIncome: convertToDollarUnit(totalIncome),
+    totalExpenses: convertToDollarUnit(totalExpenses),
+    savingRate: {
+      percentage: parseFloat(savingData.savingsPercentage.toFixed(2)),
+      expenseRatio: parseFloat(savingData.expenseRatio.toFixed(2)),
+    },
+    transactionCount,
+    percentageChange: {
+      ...percentageChange,
+      previousValues: {
+        incomeAmount: convertToDollarUnit(
+          percentageChange.previousValues.incomeAmount
+        ),
+        expenseAmount: convertToDollarUnit(
+          percentageChange.previousValues.expenseAmount
+        ),
+        balanceAmount: convertToDollarUnit(
+          percentageChange.previousValues.balanceAmount
+        ),
+      },
+    },
+    preset: {
+      ...range,
+      value: rangeValue || DateRangeEnum.ALL_TIME,
+      label: range?.label || "All Time",
+    },
+  };
+};
+
+export const chartAnalyticsService = async (
+  userId: string,
+  dateRangePreset?: DateRangePreset,
+  customFrom?: Date,
+  customTo?: Date
+) => {
+  const range = getDateRange(dateRangePreset, customFrom, customTo);
+  const { from, to, value: rangeValue } = range;
+
+  const filter: any = {
+    userId: new mongoose.Types.ObjectId(userId),
+    ...(from &&
+      to && {
+        date: {
+          $gte: from,
+          $lte: to,
+        },
+      }),
+  };
+
+  const result = await TransactionModel.aggregate([
+    { $match: filter },
+    //Group the transaction by date (YYYY-MM-DD)
+    {
+      $group: {
+        _id: {
+          $dateToString: {
+            format: "%Y-%m-%d",
+            date: "$date",
+          },
+        },
+
+        income: {
+          $sum: {
+            $cond: [
+              { $eq: ["$type", TransactionTypeEnum.INCOME] },
+              { $abs: "$amount" },
+              0,
+            ],
+          },
+        },
+
+        expenses: {
+          $sum: {
+            $cond: [
+              { $eq: ["$type", TransactionTypeEnum.EXPENSE] },
+              { $abs: "$amount" },
+              0,
+            ],
+          },
+        },
+
+        incomeCount: {
+          $sum: {
+            $cond: [{ $eq: ["$type", TransactionTypeEnum.INCOME] }, 1, 0],
+          },
+        },
+
+        expenseCount: {
+          $sum: {
+            $cond: [{ $eq: ["$type", TransactionTypeEnum.EXPENSE] }, 1, 0],
+          },
+        },
+      },
+    },
+
+    { $sort: { _id: 1 } },
+
+    {
+      $project: {
+        _id: 0,
+        date: "$_id",
+        income: 1,
+        expenses: 1,
+        incomeCount: 1,
+        expenseCount: 1,
+      },
+    },
+
+    {
+      $group: {
+        _id: null,
+        chartData: { $push: "$$ROOT" },
+        totalIncomeCount: { $sum: "$incomeCount" },
+        totalExpenseCount: { $sum: "$expenseCount" },
+      },
+    },
+
+    {
+      $project: {
+        _id: 0,
+        chartData: 1,
+        totalIncomeCount: 1,
+        totalExpenseCount: 1,
+      },
+    },
+  ]);
+
+  const resultData = result[0] || {};
+
+  const transaformedData = (resultData?.chartData || []).map((item: any) => ({
+    date: item.date,
+    income: convertToDollarUnit(item.income),
+    expenses: convertToDollarUnit(item.expenses),
+  }));
+
+  return {
+    chartData: transaformedData,
+    totalIncomeCount: resultData.totalIncomeCount,
+    totalExpenseCount: resultData.totalExpenseCount,
+    preset: {
+      ...range,
+      value: rangeValue || DateRangeEnum.ALL_TIME,
+      label: range?.label || "All Time",
+    },
+  };
+};
+
+export const expensePieChartBreakdownService = async (
+  userId: string,
+  dateRangePreset?: DateRangePreset,
+  customFrom?: Date,
+  customTo?: Date
+) => {
+  const range = getDateRange(dateRangePreset, customFrom, customTo);
+  const { from, to, value: rangeValue } = range;
+
+  const filter: any = {
+    userId: new mongoose.Types.ObjectId(userId),
+    type: TransactionTypeEnum.EXPENSE,
+    ...(from &&
+      to && {
+        date: {
+          $gte: from,
+          $lte: to,
+        },
+      }),
+  };
+
+  const pipleline: PipelineStage[] = [
+    {
+      $match: filter,
+    },
+    {
+      $group: {
+        _id: "$category",
+        value: { $sum: { $abs: "$amount" } },
+      },
+    },
+    { $sort: { value: -1 } }, //
+
+    {
+      $facet: {
+        topThree: [{ $limit: 3 }],
+        others: [
+          { $skip: 3 },
+          {
+            $group: {
+              _id: "others",
+              value: { $sum: "$value" },
+            },
+          },
+        ],
+      },
+    },
+
+    {
+      $project: {
+        categories: {
+          $concatArrays: ["$topThree", "$others"],
+        },
+      },
+    },
+
+    { $unwind: "$categories" },
+
+    {
+      $group: {
+        _id: null,
+        totalSpent: { $sum: "$categories.value" },
+        breakdown: { $push: "$categories" },
+      },
+    },
+
+    {
+      $project: {
+        _id: 0,
+        totalSpent: 1,
+        breakdown: {
+          // .map((cat: any)=> )
+          $map: {
+            input: "$breakdown",
+            as: "cat",
+            in: {
+              name: "$$cat._id",
+              value: "$$cat.value",
+              percentage: {
+                $cond: [
+                  { $eq: ["$totalSpent", 0] },
+                  0,
+                  {
+                    $round: [
+                      {
+                        $multiply: [
+                          { $divide: ["$$cat.value", "$totalSpent"] },
+                          100,
+                        ],
+                      },
+                      0,
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+  ];
+
+  const result = await TransactionModel.aggregate(pipleline);
+
+  const data = result[0] || {
+    totalSpent: 0,
+    breakdown: [],
+  };
+  const transformedData = {
+    totalSpent: convertToDollarUnit(data.totalSpent),
+    breakdown: data.breakdown.map((item: any) => ({
+      ...item,
+      value: convertToDollarUnit(item.value),
+    })),
+  };
+
+  return {
+    ...transformedData,
+    preset: {
+      ...range,
+      value: rangeValue || DateRangeEnum.ALL_TIME,
+      label: range?.label || "All Time",
+    },
+  };
+};
+
+function calaulatePercentageChange(previous: number, current: number) {
+  if (previous === 0) return current === 0 ? 0 : 100;
+  const changes = ((current - previous) / Math.abs(previous)) * 100;
+  const cappedChange = Math.min(Math.max(changes, -100), 100);
+  return parseFloat(cappedChange.toFixed(2));
+}
+</file>
+
+<file path="server/src/services/auth.service.ts">
+import mongoose from "mongoose";
+import { LoginSchemaType, RegisterSchemaType } from "../validators/auth.validator.ts";
+import UserModel from "../models/user.model.ts";
+import { NotFoundException, UnauthorizedException } from "../utils/app-error.ts";
+import ReportSettingModel, { ReportFrequencyEnum } from "../models/report-setting.model.ts";
+import { calculateNextReportDate } from "../utils/helper.ts";
+import { signJwtToken } from "../utils/jwt.ts";
+import { stripeClient } from "../config/stripe.config.ts";
+import { Env } from "../config/env.config.ts";
+import SubscriptionModel, { SubscripionStatus } from "../models/subscription.model.ts";
+
+const TRIAL_DAYS = Number(Env.TRIAL_DAYS);
+
+export const registerService = async (body: RegisterSchemaType) => {
+    const { email } = body;
+
+    const session = await mongoose.startSession();
+
+    try {
+        await session.withTransaction(async () => {
+            const existingUser = await UserModel.findOne({ email }).session(session);
+            if (existingUser) throw new UnauthorizedException("User already exists");
+
+            const newUser = new UserModel({
+                ...body
+            });
+            await newUser.save({ session });
+
+            const customer = await stripeClient.customers.create({
+                email: newUser.email,
+                name: newUser.name
+            })
+
+            newUser.stripeCustomerId = customer.id;
+            await newUser.save({ session });
+
+            const _userId = newUser.id.toString();
+
+            const ONE_MINUTES_IN_SECONDS = 1*60;
+            const trialEndDate = Math.floor(Date.now() / 1000) + TRIAL_DAYS * ONE_MINUTES_IN_SECONDS    
+
+            const stripeSubscription = await stripeClient.subscriptions.create({
+                customer: customer.id,
+                items: [{ price: Env.STRIPE_MONTHLY_PLAN_PRICE_ID }],
+                // trial_period_days: TRIAL_DAYS,
+                trial_end: trialEndDate,
+                trial_settings: {
+                    end_behavior: {
+                        missing_payment_method: "cancel"
+                    }
+                },
+                metadata: {
+                    userId: _userId
+                }
+            })
+
+            const subscriptionDoc = new SubscriptionModel({
+                userId: newUser._id,
+                status: SubscripionStatus.TRIALING,
+                plan: null,
+                stripeSubscriptionId: stripeSubscription.id,
+                stripePriceId: stripeSubscription.items.data[0].price.id,
+                trialStartsAt: new Date(stripeSubscription.trial_start! * 1000),
+                trialEndsAt: new Date(stripeSubscription.trial_end! * 1000),
+                trialDays: TRIAL_DAYS,
+            });
+
+            await subscriptionDoc.save({ session})
+
+            newUser.subscriptionId = subscriptionDoc._id as mongoose.Types.ObjectId;
+            await newUser.save({ session });
+
+            const reportSetting = new ReportSettingModel({
+                userId: newUser._id,
+                frequency: ReportFrequencyEnum.MONTHLY,
+                isEnabled: true,
+                nextReportDate: calculateNextReportDate(),
+                lastSentDate: null
+            });
+
+            await reportSetting.save({ session });
+
+            return { user: newUser.omitPassword() };
+        })
+    } catch (error) {
+        throw error;
+    } finally {
+        await session.endSession();
+    }
+};
+
+export const loginService = async (body: LoginSchemaType) => {
+    const { email, password } = body;
+    const user = await UserModel.findOne({ email });
+    if (!user) throw new NotFoundException("Email/password not found");
+
+    const isPasswordValid = await user.comparePassword(password);
+
+    if (!isPasswordValid)
+        throw new UnauthorizedException("Invalid email/password");
+
+    const { token, expiresAt } = signJwtToken({ userId: user.id });
+
+    const reportSetting = await ReportSettingModel.findOne(
+        {
+            userId: user.id,
+        },
+        { _id: 1, frequency: 1, isEnabled: 1 }
+    ).lean();
+
+    return {
+        user: user.omitPassword(),
+        accessToken: token,
+        expiresAt,
+        reportSetting,
+    };
+};
+</file>
+
+<file path="server/src/services/billing.service.ts">
+import { success } from "zod";
+import { Env } from "../config/env.config.ts";
+import { stripeClient } from "../config/stripe.config.ts";
+import { planFeatures } from "../constant/subscription.ts";
+import {
+    SubscripionStatus,
+    SubscriptionDocument,
+    SubscriptionPlanEnum,
+    SubscriptionPriceEnum
+} from "../models/subscription.model.ts"
+import UserModel from "../models/user.model.ts"
+import { BadRequestException, InternalServerException, NotFoundException, UnauthorizedException } from "../utils/app-error.ts";
+import { convertToDollarUnit } from "../utils/format-currency.ts";
+import { SwitchToSubscriptionPlanSchemaType, UpgradeToProSubscriptionSchemaType } from "../validators/billing.validator.ts";
+
+export const getUserSubscriptionStatusService = async (userId: string) => {
+    const user = await UserModel.findById(userId).populate<{
+        subscriptionId: SubscriptionDocument;
+    }>("subscriptionId")
+    if (!user || !user.subscriptionId) {
+        throw new NotFoundException("No subscription found")
+    }
+
+    const subscriptionDoc = user.subscriptionId;
+    const isTrialActive = subscriptionDoc.isTrialActive();
+
+    const now = new Date();
+    const daysLeft = subscriptionDoc.trialEndsAt
+        ? Math.max(
+            0,
+            Math.ceil((subscriptionDoc.trialEndsAt.getTime() - now.getTime()) /
+                (1000 * 60 * 60 * 24)
+            )
+        )
+        : 0;
+
+    const planData = {
+        [SubscriptionPlanEnum.MONTHLY]: {
+            price: convertToDollarUnit(SubscriptionPriceEnum.MONTHLY),
+            billing: "month",
+            savings: null,
+            features: planFeatures[SubscriptionPlanEnum.MONTHLY]
+        },
+        [SubscriptionPlanEnum.YEARLY]: {
+            price: convertToDollarUnit(SubscriptionPriceEnum.YEARLY),
+            billing: "year",
+            savings: "Save 17%",
+            features: planFeatures[SubscriptionPlanEnum.YEARLY]
+        }
+    }
+
+    const subscriptionData = {
+        isTrialActive,
+        currentPlan: subscriptionDoc.plan,
+        trialEndsAt: subscriptionDoc.trialEndsAt,
+        trialDays: subscriptionDoc.trialDays,
+        status: subscriptionDoc.status,
+        daysLeft: isTrialActive ? daysLeft : 0,
+        planData
+    }
+
+    return {
+        subscriptionData
+    };
+}
+
+export const upgradeToProSubscriptionService = async (
+    userId: string,
+    body: UpgradeToProSubscriptionSchemaType
+) => {
+    const { callbackUrl, plan } = body;
+    const user = await UserModel.findById(userId).populate<{
+        subscriptionId: SubscriptionDocument;
+    }>("subscriptionId")
+    if (!user) throw new NotFoundException("User not found")
+
+    if (user.subscriptionId?.status === SubscripionStatus.ACTIVE) {
+        throw new UnauthorizedException("You are already on pro plan")
+    }
+
+    if (!user.stripeCustomerId) {
+        const customer = await stripeClient.customers.create({
+            email: user.email,
+            name: user.name
+        })
+        user.stripeCustomerId = customer.id
+        await user.save()
+    }
+
+    const _userId = user.id?.toString();
+    const priceId =
+        plan === SubscriptionPlanEnum.MONTHLY
+            ? Env.STRIPE_MONTHLY_PLAN_PRICE_ID
+            : Env.STRIPE_YEARLY_PLAN_PRICE_ID
+
+    const session = await stripeClient.checkout.sessions.create({
+        mode: "subscription",
+        customer: user.stripeCustomerId,
+        success_url: `${callbackUrl}?success=true&plan=${plan}`,
+        cancel_url: `${callbackUrl}?success=false`,
+        payment_method_types: ["card"],
+        billing_address_collection: "auto",
+        line_items: [
+            {
+                price: priceId,
+                quantity: 1,
+            },
+        ],
+        subscription_data: {
+            metadata: {
+                userId: _userId,
+                plan
+            }
+        }
+    })
+
+    return { url: session.url }
+}
+
+export const manageSubscriptionBillingPortalService = async (
+    userId: string,
+    callbackUrl: string
+) => {
+    const user = await UserModel.findById(userId).populate<{
+        subscriptionId: SubscriptionDocument;
+    }>("subscriptionId")
+    if (!user) throw new NotFoundException("User not found")
+
+    if (!user.stripeCustomerId) {
+        const customer = await stripeClient.customers.create({
+            email: user.email,
+            name: user.name
+        })
+        user.stripeCustomerId = customer.id
+        await user.save()
+    }
+
+    try {
+        const session = await stripeClient.billingPortal.sessions.create({
+            customer: user.stripeCustomerId,
+            return_url: callbackUrl
+        })
+
+        if (!session || !session.url) {
+            throw new InternalServerException("Billing Portal URL generate error")
+        }
+
+        return session.url
+
+    } catch (error) {
+        throw new InternalServerException("Billing Portal URL generate error")
+    }
+}
+
+export const switchToSubscriptionPlanService = async (
+    userId: string,
+    body: SwitchToSubscriptionPlanSchemaType
+) => {
+    const { newPlan } = body;
+
+    const user = await UserModel.findById(userId).populate<{
+        subscriptionId: SubscriptionDocument;
+    }>("subscriptionId")
+
+    if (!user || !user.subscriptionId.stripeSubscriptionId) {
+        throw new UnauthorizedException(
+            "You are not subscribed to any plan"
+        )
+    }
+
+    if (user.subscriptionId.plan === newPlan) {
+        throw new BadRequestException(
+            `You are already on the ${newPlan} plan`
+        )
+    }
+
+    const subscription = await stripeClient.subscriptions.retrieve(
+        user.subscriptionId.stripeSubscriptionId
+    )
+
+    const priceId =
+        newPlan === SubscriptionPlanEnum.YEARLY
+            ? Env.STRIPE_YEARLY_PLAN_PRICE_ID
+            : Env.STRIPE_MONTHLY_PLAN_PRICE_ID
+
+    if (!priceId)
+        throw new InternalServerException("Subscription Price configure error")
+
+    await stripeClient.subscriptions.update(subscription.id, {
+        items: [
+            {
+                id: subscription.items.data[0].id,
+                price: priceId
+            }
+        ],
+        proration_behavior: "create_prorations",
+        payment_behavior: "allow_incomplete",
+        metadata: {
+            userId: user.id,
+            plan: newPlan
+        }
+    })
+
+    return {
+        success: true,
+        message: `You have successfully switched to ${newPlan} plan`
+    }
+}
+</file>
+
+<file path="server/src/services/report.service.ts">
+import ReportSettingModel from "../models/report-setting.model.ts";
+import ReportModel from "../models/report.model.ts";
+import { UpdateReportSettingType } from "../validators/report.validator.ts";
+import mongoose from "mongoose";
+import TransactionModel, {
+    TransactionTypeEnum
+} from "../models/transaction.model.ts";
+import { NotFoundException } from "../utils/app-error.ts";
+import { calculateNextReportDate } from "../utils/helper.ts";
+import { convertToDollarUnit } from "../utils/format-currency.ts";
+import { format } from "date-fns";
+import { genAI, genAIModel } from "../config/google-ai.ts";
+import { createUserContent } from "@google/genai";
+import { reportInsightPrompt } from "../utils/prompt.ts";
+
+export const getAllReportsService = async (
+    userId: string,
+    pagination: {
+        pageSize: number;
+        pageNumber: number;
+    }
+) => {
+    const query: Record<string, any> = { userId };
+
+    const { pageSize, pageNumber } = pagination;
+    const skip = (pageNumber - 1) * pageSize;
+
+    const [reports, totalCount] = await Promise.all([
+        ReportModel.find(query).skip(skip).limit(pageSize).sort({ sentDate: -1 }),
+        ReportModel.countDocuments(query)
+    ])
+
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    return {
+        reports,
+        pagination: {
+            pageSize,
+            pageNumber,
+            totalCount,
+            totalPages,
+            skip
+        }
+    }
+}
+
+export const updateReportSettingService = async (
+    userId: string,
+    body: UpdateReportSettingType
+) => {
+    const { isEnabled } = body;
+    let nextReportDate: Date | null = null;
+
+    const existingReportSetting = await ReportSettingModel.findOne({
+        userId,
+    })
+    if (!existingReportSetting)
+        throw new NotFoundException("Report setting not found");
+
+    // const frequency = 
+    //     existingReportSetting.frequency || ReportFrequencyEnum.MONTHLY 
+
+    if (isEnabled) {
+        const currentNextTeportDate = existingReportSetting.nextReportDate;
+        const now = new Date();
+        if (!currentNextTeportDate || currentNextTeportDate < now) {
+            nextReportDate = calculateNextReportDate(
+                existingReportSetting.lastSentDate
+            );
+        } else {
+            nextReportDate = currentNextTeportDate;
+        }
+    }
+
+    console.log(nextReportDate, "nextReportdate");
+
+    existingReportSetting.set({
+        ...body,
+        nextReportDate,
+    })
+
+    await existingReportSetting.save();
+}
+
+export const generateReportService = async (
+    userId: string,
+    fromDate: Date,
+    toDate: Date
+) => {
+    const results = await TransactionModel.aggregate([
+        {
+            $match: {
+                userId: new mongoose.Types.ObjectId(userId),
+                date: { $gte: fromDate, $lte: toDate },
+            },
+        },
+        {
+            $facet: {
+                summary: [
+                    {
+                        $group: {
+                            _id: null,
+                            totalIncome: {
+                                $sum: {
+                                    $cond: [
+                                        { $eq: ["$type", TransactionTypeEnum.INCOME] },
+                                        { $abs: "$amount" },
+                                        0,
+                                    ],
+                                },
+                            },
+
+                            totalExpenses: {
+                                $sum: {
+                                    $cond: [
+                                        { $eq: ["$type", TransactionTypeEnum.EXPENSE] },
+                                        { $abs: "$amount" },
+                                        0,
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                ],
+
+                categories: [
+                    {
+                        $match: { type: TransactionTypeEnum.EXPENSE },
+                    },
+                    {
+                        $group: {
+                            _id: "$category",
+                            total: { $sum: { $abs: "$amount" } },
+                        },
+                    },
+                    {
+                        $sort: { total: -1 },
+                    },
+                    {
+                        $limit: 5,
+                    },
+                ],
+            },
+        },
+        {
+            $project: {
+                totalIncome: {
+                    $arrayElemAt: ["$summary.totalIncome", 0],
+                },
+                totalExpenses: {
+                    $arrayElemAt: ["$summary.totalExpenses", 0],
+                },
+                categories: 1,
+            },
+        },
+    ]);
+
+    if (
+        !results?.length ||
+        (results[0]?.totalIncome === 0 && results[0]?.totalExpenses === 0)
+    )
+        return null;
+
+    const {
+        totalIncome = 0,
+        totalExpenses = 0,
+        categories = [],
+    } = results[0] || {};
+
+    console.log(results[0], "results");
+
+    const byCategory = categories.reduce(
+        (acc: any, { _id, total }: any) => {
+            acc[_id] = {
+                amount: convertToDollarUnit(total),
+                percentage:
+                    totalExpenses > 0 ? Math.round((total / totalExpenses) * 100) : 0,
+            };
+            return acc;
+        },
+        {} as Record<string, { amount: number; percentage: number }>
+    );
+
+    const availableBalance = totalIncome - totalExpenses;
+    const savingsRate = calculateSavingRate(totalIncome, totalExpenses);
+
+    const periodLabel = `${format(fromDate, "MMMM d")} - ${format(toDate, "d, yyyy")}`;
+
+    const insights = await generateInsightsAI({
+        totalIncome,
+        totalExpenses,
+        availableBalance,
+        savingsRate,
+        categories: byCategory,
+        periodLabel: periodLabel,
+    });
+
+    return {
+        period: periodLabel,
+        summary: {
+            income: convertToDollarUnit(totalIncome),
+            expenses: convertToDollarUnit(totalExpenses),
+            balance: convertToDollarUnit(availableBalance),
+            savingsRate: Number(savingsRate.toFixed(1)),
+            topCategories: Object.entries(byCategory)?.map(([name, cat]: any) => ({
+                name,
+                amount: cat.amount,
+                percent: cat.percentage,
+            })),
+        },
+        insights,
+    };
+};
+
+async function generateInsightsAI({
+    totalIncome,
+    totalExpenses,
+    availableBalance,
+    savingsRate,
+    categories,
+    periodLabel,
+}: {
+    totalIncome: number;
+    totalExpenses: number;
+    availableBalance: number;
+    savingsRate: number;
+    categories: Record<string, { amount: number; percentage: number }>;
+    periodLabel: string;
+}) {
+    try {
+        const prompt = reportInsightPrompt({
+            totalIncome: convertToDollarUnit(totalIncome),
+            totalExpenses: convertToDollarUnit(totalExpenses),
+            availableBalance: convertToDollarUnit(availableBalance),
+            savingsRate: Number(savingsRate.toFixed(1)),
+            categories,
+            periodLabel,
+        });
+
+        const result = await genAI.models.generateContent({
+            model: genAIModel,
+            contents: [createUserContent([prompt])],
+            config: {
+                responseMimeType: "application/json",
+            }
+        });
+
+        const response = result.text;
+        const cleanedText = response?.replace(/```(?:json)?\n?/g, "").trim();
+
+        if (!cleanedText) return [];
+
+        const data = JSON.parse(cleanedText);
+        return data;
+    } catch (error) {
+        return [];
+    }
+}
+
+function calculateSavingRate(totalIncome: number, totalExpenses: number) {
+    if(totalIncome <= 0) return 0;
+    const savingRate = ((totalIncome - totalExpenses) / totalIncome)*100;
+    return parseFloat(savingRate.toFixed(2));
+}
+</file>
+
+<file path="server/src/services/transaction.service.ts">
+import TransactionModel, {
+    TransactionTypeEnum
+} from "../models/transaction.model.ts";
+import { calculateNextOccurrence } from "../utils/helper.ts";
+import {
+    CreateTransactionType,
+    UpdateTransactionType
+} from "../validators/transaction.validator.ts";
+import axios from "axios";
+import { BadRequestException, NotFoundException } from "../utils/app-error.ts";
+import { genAI, genAIModel } from "../config/google-ai.ts";
+import { receiptPrompt } from "../utils/prompt.ts";
+import { createPartFromBase64, createUserContent } from "@google/genai";
+import { uploadToCloudinary } from "../config/cloudinary.config.ts";
+
+export const createTransactionService = async (
+    body: CreateTransactionType,
+    userId: string
+) => {
+    let nextRecurringDate: Date | undefined;
+    const currentDate = new Date();
+
+    if (body.isRecurring && body.recurringInterval) {
+        const calulatedDate = calculateNextOccurrence(
+            body.date,
+            body.recurringInterval
+        );
+
+        nextRecurringDate =
+            calulatedDate < currentDate
+                ? calculateNextOccurrence(currentDate, body.recurringInterval)
+                : calulatedDate;
+    }
+
+    const transaction = await TransactionModel.create({
+        ...body,
+        userId,
+        category: body.category,
+        amount: Number(body.amount),
+        isRecurring: body.isRecurring || false,
+        recurringInterval: body.recurringInterval || null,
+        nextRecurringDate,
+        lastProcessed: null,
+    });
+
+    return transaction;
+};
+
+export const getAllTransactionService = async (
+    userId: string,
+    filters: {
+        keyword?: string;
+        type?: keyof typeof TransactionTypeEnum;
+        recurringStatus?: "RECURRING" | "NON_RECURRING";
+    },
+    pagination: {
+        pageSize: number;
+        pageNumber: number;
+    }
+) => {
+    const { keyword, type, recurringStatus } = filters;
+
+    const filterCondition: Record<string, any> = {
+        userId,
+    };
+
+    if (keyword) {
+        filterCondition.$or = [
+            { title: { $regex: keyword, $options: "i" } },
+            { category: { $regex: keyword, $options: "i" } },
+        ];
+    }
+
+    if (type) {
+        filterCondition.type = type;
+    }
+
+    if (recurringStatus) {
+        if (recurringStatus === "RECURRING") {
+            filterCondition.isRecurring = true;
+        } else if (recurringStatus === "NON_RECURRING") {
+            filterCondition.isRecurring = false;
+        }
+    }
+
+    const { pageSize, pageNumber } = pagination;
+    const skip = (pageNumber - 1) * pageSize;
+
+    const [transactions, totalCount] = await Promise.all([
+        TransactionModel.find(filterCondition)
+            .skip(skip)
+            .limit(pageSize)
+            .sort({ date: -1 }),
+        TransactionModel.countDocuments(filterCondition),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    return {
+        transactions,
+        pagination: {
+            pageSize,
+            pageNumber,
+            totalCount,
+            totalPages,
+            skip,
+        }
+    };
+}
+
+export const getTransactionByIdService = async (
+    userId: string,
+    transactionId: string
+) => {
+    const transaction = await TransactionModel.findOne({
+        _id: transactionId,
+        userId
+    });
+    if (!transaction) throw new Error("Transaction not found");
+
+    return transaction
+}
+
+export const duplicateTransactionService = async (
+    userId: string,
+    transactionId: string
+) => {
+    const transaction = await TransactionModel.findOne({
+        _id: transactionId,
+        userId
+    });
+    if (!transaction) throw new Error("Transaction not found");
+
+    const duplicated = await TransactionModel.create({
+        ...transaction.toObject(),
+        _id: undefined,
+        title: `Duplicate - ${transaction.title}`,
+        description: transaction.description
+            ? `${transaction.description} - Duplicated`
+            : "Duplicated Transaction",
+        isRecurring: false,
+        recurringInterval: undefined,
+        nextRecurringDate: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+    })
+
+    return duplicated
+}
+
+export const updateTransactionService = async (
+    userId: string,
+    transactionId: string,
+    body: UpdateTransactionType
+) => {
+    const existingTransaction = await TransactionModel.findOne({
+        _id: transactionId,
+        userId
+    });
+    if (!existingTransaction)
+        throw new Error("Transaction not found");
+
+    const now = new Date();
+    const isRecurring = body.isRecurring ?? existingTransaction.isRecurring;
+
+    const date =
+        body.date !== undefined ? new Date(body.date) : existingTransaction.date;
+
+    const recurringInterval =
+        body.recurringInterval || existingTransaction.recurringInterval;
+
+    let nextRecurringDate: Date | undefined;
+
+    if (isRecurring && recurringInterval) {
+        const calulatedDate = calculateNextOccurrence(date, recurringInterval);
+
+        nextRecurringDate =
+            calulatedDate < now
+                ? calculateNextOccurrence(now, recurringInterval)
+                : calulatedDate;
+    }
+
+    existingTransaction.set({
+        ...(body.title && { title: body.title }),
+        ...(body.description && { description: body.description }),
+        ...(body.category && { category: body.category }),
+        ...(body.type && { type: body.type }),
+        ...(body.paymentMethod) && { paymentMethod: body.paymentMethod },
+        ...(body.amount && { amount: Number(body.amount) }),
+        date,
+        isRecurring,
+        recurringInterval,
+        nextRecurringDate,
+    });
+
+    await existingTransaction.save();
+
+    return;
+}
+
+export const deleteTransactionService = async (
+    userId: string,
+    transactionId: string
+) => {
+    const transaction = await TransactionModel.findByIdAndDelete({
+        _id: transactionId,
+        userId
+    });
+    if (!transaction) throw new Error("Transaction not found");
+
+    return transaction
+}
+
+export const bulkDeleteTransactionService = async (
+    userId: string,
+    transactionIds: string[]
+) => {
+    const result = await TransactionModel.deleteMany({
+        _id: { $in: transactionIds },
+        userId,
+    });
+
+    if (result.deletedCount === 0)
+        throw new Error("Transaction not found");
+
+    return {
+        success: true,
+        deletedCount: result.deletedCount
+    }
+}
+
+export const bulkTransactionService = async (
+    userId: string,
+    transactions: CreateTransactionType[]
+) => {
+    try {
+        const bulkOps = transactions.map((tx) => ({
+            insertOne: {
+                document: {
+                    ...tx,
+                    userId,
+                    isRecurring: false,
+                    nextRecurringDate: null,
+                    recurringInterval: null,
+                    lastProcesses: null,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                }
+            }
+        }))
+
+        const result = await TransactionModel.bulkWrite(bulkOps, {
+            ordered: true,
+        });
+
+        return {
+            insertedCount: result.insertedCount,
+            success: true
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const scanReceiptService = async (
+  file: Express.Multer.File | undefined
+) => {
+  if (!file) throw new BadRequestException("File not found");
+
+  try {
+    // Convert the in‑memory buffer directly to base64
+    const base64String = file.buffer.toString("base64");
+
+    if (!base64String) throw new BadRequestException("Could not process file");
+
+    const result = await genAI.models.generateContent({
+      model: genAIModel,
+      contents: [
+        createUserContent([
+          receiptPrompt,
+          createPartFromBase64(base64String, file.mimetype),
+        ])
+      ],
+      config: {
+        temperature: 0,
+        topP: 1,
+        responseMimeType: "application/json"
+      }
+    });
+
+    const response = result.text;
+    const cleanedText = response?.replace(/```(?:json)?\n?/g, "").trim();
+
+    if (!cleanedText) {
+      return { error: "Could not read receipt" };
+    }
+
+    const data = JSON.parse(cleanedText);
+
+    if (!data.amount || !data.date) {
+      return { error: "Receipt missing required information" };
+    }
+
+    const receiptUrl = await uploadToCloudinary(file.buffer);
+
+    return {
+      title: data.title || "Receipt",
+      amount: data.amount,
+      date: data.date,
+      describetion: data.description,
+      category: data.category,
+      paymentMethod: data.paymentMethod,
+      type: data.type,
+      receiptUrl
+    };
+  } catch (error) {
+    // Optional: log error for debugging
+    console.error("Receipt scanning error:", error);
+    return { error: "Receipt scanning service unavailable" };
+  }
+};
+</file>
+
+<file path="server/src/services/user.service.ts">
+import UserModel from "../models/user.model.ts"
+import { UpdateUserType } from "../validators/user.validator.ts"
+import { NotFoundException } from "../utils/app-error.ts"
+
+export const findByIdUserService = async (userId: string) => {
+    const user = await UserModel.findById(userId)
+    return user?.omitPassword()
+}
+
+export const updateUserService = async (
+    userId: string,
+    body: UpdateUserType,
+    profilePic?: Express.Multer.File
+) => {
+    const user = await UserModel.findById(userId)
+    if (!user) throw new Error("User not found")
+
+    if (profilePic) {
+        user.profilePicture = profilePic.path
+    }
+
+    user.set({
+        name: body.name
+    })
+
+    await user.save()
+    
+    return user
+}
+</file>
+
+<file path="server/src/utils/app-error.ts">
+import { HTTPSTATUS, HttpStatusCodeType } from "../config/http.config.js";
+import { ErrorCodeEnumType, ErrorCodeEnum } from "../enums/error-code.enum.js";
+
+export class AppError extends Error {
+    public statusCode : HttpStatusCodeType;
+    public errorCode ?: ErrorCodeEnumType;
+
+    constructor(
+        message: string,
+        statusCode = HTTPSTATUS.INTERNAL_SERVER_ERROR,
+        errorCode ?: ErrorCodeEnumType
+    ) {
+        super(message);
+        this.statusCode = statusCode;
+        this.errorCode = errorCode;
+        Error.captureStackTrace(this, this.constructor)
+    }
+}
+
+export class HttpException extends AppError {
+    constructor(
+        message = "Http Exception error",
+        statusCode: HttpStatusCodeType,
+        errorCode ?: ErrorCodeEnumType
+    ) {
+        super(message, statusCode, errorCode);
+    }
+}
+
+export class NotFoundException extends AppError {
+  constructor(message = "Resource not found", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.NOT_FOUND,
+      errorCode || ErrorCodeEnum.RESOURCE_NOT_FOUND
+    );
+  }
+}
+
+export class BadRequestException extends AppError {
+  constructor(message = "Bad Request", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.BAD_REQUEST,
+      errorCode || ErrorCodeEnum.VALIDATION_ERROR
+    );
+  }
+}
+
+export class UnauthorizedException extends AppError {
+  constructor(message = "Unauthorized Access", errorCode?: ErrorCodeEnumType) {
+    super(
+      message,
+      HTTPSTATUS.UNAUTHORIZED,
+      errorCode || ErrorCodeEnum.ACCESS_UNAUTHORIZED
+    );
+  }
+}
+
+export class InternalServerException extends AppError {
+  constructor(
+    message = "Internal Server Error",
+    errorCode?: ErrorCodeEnumType
+  ) {
+    super(
+      message,
+      HTTPSTATUS.INTERNAL_SERVER_ERROR,
+      errorCode || ErrorCodeEnum.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+</file>
+
+<file path="server/src/utils/bcrypt.ts">
+import bcrypt from 'bcrypt'
+
+export const hashValue = async (value: string, saltRounds: number = 10) =>
+    await bcrypt.hash(value, saltRounds);
+
+export const compareValue = async (value: string, hashedValue: string) =>
+    await bcrypt.compare(value, hashedValue)
+</file>
+
+<file path="server/src/utils/date.ts">
+import {
+  endOfDay,
+  endOfMonth,
+  endOfYear,
+  startOfMonth,
+  startOfYear,
+  subDays,
+  subMonths,
+  subYears,
+} from "date-fns";
+import { DateRangeEnum, DateRangePreset } from "../enums/date-range.enum.ts";
+
+export const getDateRange = (
+  preset?: DateRangePreset,
+  customFrom?: Date,
+  customTo?: Date
+) => {
+  if (customFrom && customTo) {
+    return {
+      from: customFrom,
+      to: customTo,
+      value: DateRangeEnum.CUSTOM,
+    };
+  }
+
+  const now = new Date();
+
+  // const yesterday = subDays(now.setHours(0, 0, 0, 0), 1);
+  const today = endOfDay(now);
+  const last30Days = {
+    from: subDays(today, 29),
+    to: today,
+    value: DateRangeEnum.LAST_30_DAYS,
+    label: "Last 30 Days",
+  };
+  console.log(last30Days, "last30");
+
+  switch (preset) {
+    case DateRangeEnum.ALL_TIME:
+      return {
+        from: null,
+        to: null,
+        value: DateRangeEnum.ALL_TIME,
+        label: "All Time",
+      };
+    case DateRangeEnum.LAST_30_DAYS:
+      return last30Days;
+    case DateRangeEnum.LAST_MONTH:
+      return {
+        from: startOfMonth(subMonths(now, 1)),
+        to: endOfMonth(subMonths(now, 1)),
+        value: DateRangeEnum.LAST_MONTH,
+        label: "Last Month",
+      };
+    case DateRangeEnum.LAST_3_MONTHS:
+      return {
+        from: startOfMonth(subMonths(now, 3)),
+        to: endOfMonth(subMonths(now, 1)),
+        value: DateRangeEnum.LAST_3_MONTHS,
+        label: "Last 3 Months",
+      };
+    case DateRangeEnum.LAST_YEAR:
+      return {
+        from: startOfYear(subYears(now, 1)),
+        to: endOfYear(subYears(now, 1)),
+        value: DateRangeEnum.LAST_YEAR,
+        label: "Last Year",
+      };
+    case DateRangeEnum.THIS_MONTH:
+      return {
+        from: startOfMonth(now),
+        to: endOfDay(now),
+        value: DateRangeEnum.THIS_MONTH,
+        label: "This Month",
+      };
+    case DateRangeEnum.THIS_YEAR:
+      return {
+        from: startOfYear(now),
+        to: endOfDay(now),
+        value: DateRangeEnum.THIS_YEAR,
+        label: "This Year",
+      };
+    default:
+      return last30Days;
+  }
+};
+</file>
+
+<file path="server/src/utils/format-currency.ts">
+// Convert dollars to cents when saving
+export function convertToCents(amount: number) {
+  return Math.round(amount * 100);
+}
+
+// Convert cents to dollars when retrieving
+//convertFromCents
+export function convertToDollarUnit(amount: number) {
+  return amount / 100;
+}
+
+export function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
+</file>
+
+<file path="server/src/utils/get-env.ts">
+export const getEnv = (key: string, defaultValue?: string): string => {
+  const value = process.env[key];
+  if (value === undefined) {
+    if (defaultValue === undefined) {
+      throw new Error(`Environment variable ${key} is not set`);
+    }
+    return defaultValue;
+  }
+  return value;
+};
+</file>
+
+<file path="server/src/utils/helper.ts">
+import { addDays, addMonths, addWeeks, addYears, startOfMonth } from "date-fns";
+import { RecurringIntervalEnum } from "../models/transaction.model.ts";
+
+export function calculateNextReportDate(lastSentDate?: Date): Date {
+  const now = new Date();
+  const lastSent = lastSentDate || now;
+
+  const nextDate = startOfMonth(addMonths(lastSent, 1));
+  nextDate.setHours(0, 0, 0, 0);
+
+  console.log(nextDate, "nextDate");
+  return nextDate;
+}
+
+export function calculateNextOccurrence(
+  date: Date,
+  recurringInterval: keyof typeof RecurringIntervalEnum
+) {
+  const base = new Date(date);
+  base.setHours(0, 0, 0, 0);
+
+  switch (recurringInterval) {
+    case RecurringIntervalEnum.DAILY:
+      return addDays(base, 1);
+    case RecurringIntervalEnum.WEEKLY:
+      return addWeeks(base, 1);
+    case RecurringIntervalEnum.MONTHLY:
+      return addMonths(base, 1);
+    case RecurringIntervalEnum.YEARLY:
+      return addYears(base, 1);
+    default:
+      return base;
+  }
+}
+
+export function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+</file>
+
+<file path="server/src/utils/jwt.ts">
+import jwt, {JwtPayload, SignOptions} from 'jsonwebtoken'
+import { Env } from '../config/env.config.ts'
+
+type TimeUnit = "s" | "m" | "h" | "d" | "w" | "y";
+type TimeString = `${number}${TimeUnit}`;
+
+export type AccessTokenPayload = {
+    userId: string;
+}
+
+type SignOptsAndSecret = SignOptions & {
+    secret: string;
+    expiresIn?: TimeString | number;
+}
+
+const defaults: SignOptions ={
+    audience: ["user"],
+}
+
+const accessTokenSignOptions : SignOptsAndSecret = {
+    expiresIn: Env.JWT_EXPIRES_IN as TimeString,
+    secret: Env.JWT_SECRET
+}
+
+export const signJwtToken = (
+    payload: AccessTokenPayload,
+    options?: SignOptsAndSecret
+) => {
+    const isAccessToken = !options || options === accessTokenSignOptions;
+
+    const { secret, ...opts } = options || accessTokenSignOptions;
+
+    const token = jwt.sign(payload, secret, {
+        ...defaults,
+        ...opts,
+    });
+
+    const expiresAt = isAccessToken
+        ? (jwt.decode(token) as JwtPayload)?.exp! * 1000
+        : undefined
+
+    return {
+        token,
+        expiresAt
+    }
+}
+</file>
+
+<file path="server/src/utils/prompt.ts">
+import { PaymentMethodEnum } from "../models/transaction.model.ts";
+
+export const receiptPrompt = `
+You are a financial assistant that helps users analyze and extract transaction details from receipt image (base64 encoded)
+Analyze this receipt image (base64 encoded) and extract transaction details matching this exact JSON format:
+{
+  "title": "string",          // Merchant/store name or brief description
+  "amount": number,           // Total amount (positive number)
+  "date": "ISO date string",  // Transaction date in YYYY-MM-DD format
+  "description": "string",    // Items purchased summary (max 50 words)
+  "category": "string",       // category of the transaction 
+  "type": "EXPENSE"           // Always "EXPENSE" for receipts
+  "paymentMethod": "string",  // One of: ${Object.values(PaymentMethodEnum).join(",")}
+}
+
+Rules:
+1. Amount must be positive
+2. Date must be valid and in ISO format
+3. Category must match our enum values
+4. If uncertain about any field, omit it
+5. If not a receipt, return {}
+
+Example valid response:
+{
+  "title": "Walmart Groceries",
+  "amount": 58.43,
+  "date": "2025-05-08",
+  "description": "Groceries: milk, eggs, bread",
+  "category": "groceries",
+  "paymentMethod": "CARD",
+  "type": "EXPENSE"
+}
+`;
+
+export const reportInsightPrompt = ({
+  totalIncome,
+  totalExpenses,
+  availableBalance,
+  savingsRate,
+  categories,
+  periodLabel,
+}: {
+  totalIncome: number;
+  totalExpenses: number;
+  availableBalance: number;
+  savingsRate: number;
+  categories: Record<string, { amount: number; percentage: number }>;
+  periodLabel: string;
+}) => {
+  const categoryList = Object.entries(categories)
+    .map(
+      ([name, { amount, percentage }]) =>
+        `- ${name}: ${amount} (${percentage}%)`
+    )
+    .join("\n");
+
+  console.log(categoryList, "category list");
+
+  return `
+  You are a friendly and smart financial coach, not a robot.
+
+Your job is to give **exactly 3 good short insights** to the user based on their data that feel like you're talking to them directly.
+
+Each insight should reflect the actual data and sound like something a smart money coach would say based on the data — short, clear, and practical.
+
+🧾 Report for: ${periodLabel}
+- Total Income: $${totalIncome.toFixed(2)}
+- Total Expenses: $${totalExpenses.toFixed(2)}
+- Available Balance: $${availableBalance.toFixed(2)}
+- Savings Rate: ${savingsRate}%
+
+Top Expense Categories:
+${categoryList}
+
+📌 Guidelines:
+- Keep each insight to one short, realistic, personalized, natural sentence
+- Use conversational language, correct wordings & Avoid sounding robotic, or generic
+- Include specific data when helpful and comma to amount
+- Be encouraging if user spent less than they earned
+- Format your response **exactly** like this:
+
+["Insight 1", "Insight 2", "Insight 3"]
+
+✅ Example:
+[
+   "Nice! You kept $7,458 after expenses — that’s solid breathing room.",
+   "You spent the most on 'Meals' this period — 32%. Maybe worth keeping an eye on.",
+   "You stayed under budget this time. That's a win — keep the momentum"
+]
+
+⚠️ Output only a **JSON array of 3 strings**. Do not include any explanation, markdown, or notes.
+  
+  `.trim();
+};
+</file>
+
+<file path="server/src/validators/auth.validator.ts">
+import { z } from "zod";
+
+export const emailSchema = z
+  .email({ message: "Invalid email address" })   // ✅ top-level email validator
+  .trim()
+  .min(1)
+  .max(255);
+
+export const passwordSchema = z.string().trim().min(4);
+
+export const registerSchema = z.object({
+  name: z.string().trim().min(1).max(255),
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+export const loginSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+export type RegisterSchemaType = z.infer<typeof registerSchema>;
+export type LoginSchemaType = z.infer<typeof loginSchema>;
+</file>
+
+<file path="server/src/validators/billing.validator.ts">
+import { z } from "zod";
+import { SubscriptionPlanEnum } from "../models/subscription.model.ts";
+
+const callbackUrlSchema = z.string().url();
+
+const newPlanSchema = z.preprocess(
+  (val) => (typeof val === "string" ? val.toLowerCase() : val),
+  z.enum([SubscriptionPlanEnum.MONTHLY, SubscriptionPlanEnum.YEARLY])
+);
+
+export const upgradeToProSubscriptionSchema = z.object({
+  callbackUrl: callbackUrlSchema,
+  plan: newPlanSchema,
+});
+
+export const manageSubscriptionBillingPortalSchema = z.object({
+  callbackUrl: callbackUrlSchema,
+});
+
+export const switchToSubscriptionPlanSchema = z.object({
+  newPlan: newPlanSchema,
+});
+
+export type SwitchToSubscriptionPlanSchemaType = z.output<typeof switchToSubscriptionPlanSchema>;
+export type UpgradeToProSubscriptionSchemaType = z.output<typeof upgradeToProSubscriptionSchema>;
+export type ManageSubscriptionBillingPortalSchemaType = z.output<typeof manageSubscriptionBillingPortalSchema>;
+</file>
+
+<file path="server/src/validators/report.validator.ts">
+import { z } from "zod";
+
+export const reportSettingSchema = z.object({
+  isEnabled: z.boolean().default(true),
+});
+
+export const updateReportSettingSchema = reportSettingSchema.partial();
+
+export type UpdateReportSettingType = z.infer<typeof updateReportSettingSchema>;
+</file>
+
+<file path="server/src/validators/transaction.validator.ts">
+import { z } from "zod";
+import {
+  PaymentMethodEnum,
+  RecurringIntervalEnum,
+  TransactionTypeEnum,
+} from "../models/transaction.model.ts";
+
+export const transactionIdSchema = z.string().trim().min(1);
+
+export const baseTransactionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  type: z.enum(Object.values(TransactionTypeEnum) as [string, ...string[]], {
+    message: "Transaction type must be INCOME or EXPENSE",
+  }),
+  amount: z.number().positive("Amount must be positive").min(1),
+  category: z.string().min(1, "Category is required"),
+  date: z
+    .union([z.string().datetime({ message: "Invalid date string" }), z.date()])
+    .transform((val) => new Date(val)),
+  isRecurring: z.boolean().default(false),
+  recurringInterval: z
+    .enum([
+      RecurringIntervalEnum.DAILY,
+      RecurringIntervalEnum.WEEKLY,
+      RecurringIntervalEnum.MONTHLY,
+      RecurringIntervalEnum.YEARLY,
+    ])
+    .nullable()
+    .optional(),
+  receiptUrl: z.string().optional(),
+  paymentMethod: z
+    .enum([
+      PaymentMethodEnum.CARD,
+      PaymentMethodEnum.BANK_TRANSFER,
+      PaymentMethodEnum.MOBILE_PAYMENT,
+      PaymentMethodEnum.AUTO_DEBIT,
+      PaymentMethodEnum.CASH,
+      PaymentMethodEnum.OTHER,
+    ])
+    .default(PaymentMethodEnum.CASH),
+});
+
+export const bulkDeleteTransactionSchema = z.object({
+  transactionIds: z
+    .array(z.string().length(24, "Invalid transaction ID format"))
+    .min(1, "At least one transaction ID must be provided"),
+});
+
+export const bulkTransactionSchema = z.object({
+  transactions: z
+    .array(baseTransactionSchema)
+    .min(1, "At least one transaction is required")
+    .max(300, "Must not be more than 300 transactions")
+    .refine(
+      (txs) =>
+        txs.every((tx) => {
+          const amount = Number(tx.amount);
+          return !isNaN(amount) && amount > 0 && amount <= 1_000_000_000;
+        }),
+      {
+        message: "Amount must be a postive number",
+      }
+    ),
+});
+
+export const createTransactionSchema = baseTransactionSchema;
+export const updateTransactionSchema = baseTransactionSchema.partial();
+
+export type CreateTransactionType = z.infer<typeof createTransactionSchema>;
+
+export type UpdateTransactionType = z.infer<typeof updateTransactionSchema>;
+
+export type BulkDelteTransactionType = z.infer<
+  typeof bulkDeleteTransactionSchema
+>;
+</file>
+
+<file path="server/src/validators/user.validator.ts">
+import { z } from "zod";
+
+export const updateUserSchema = z.object({
+  name: z.string().trim().min(1).max(255).optional(),
+});
+
+export type UpdateUserType = z.infer<typeof updateUserSchema>;
+</file>
+
+<file path="server/tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true // We use tsup for building, tsc only for type-checking
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+</file>
+
+</files>

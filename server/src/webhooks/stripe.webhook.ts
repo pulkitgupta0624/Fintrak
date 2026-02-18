@@ -64,6 +64,7 @@ export const stripeWebHookHandler = async (req: Request, res: Response) => {
         }
         res.status(HTTPSTATUS.OK).json({ received: true });
     } catch (error: any) {
+        console.error(`Webhook handler error for ${event.type}:`, error);
         res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({ error: error.message });
     }
 }
@@ -71,7 +72,7 @@ export const stripeWebHookHandler = async (req: Request, res: Response) => {
 async function handleCheckoutSessionCompleted(
     session: Stripe.Checkout.Session
 ) {
-    console.log(`Insde checkout.session.completed`);
+    console.log(`Inside checkout.session.completed`);
     const stripeSubscriptionId = session.subscription as string;
     if (!stripeSubscriptionId) return;
 
@@ -109,8 +110,8 @@ async function handleCheckoutSessionCompleted(
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     console.log(
-        `Insde invoice.payment_succeeded`,
-        `Amount: ${invoice.amount_paid/100}`
+        `Inside invoice.payment_succeeded`,
+        `Amount: ${invoice.amount_paid / 100}`
     );
     const subscriptionId = invoice.lines.data[0]?.subscription as string;
     if (!subscriptionId) return;
@@ -122,7 +123,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     if (!userId) return;
 
     if (subscription.status === "trialing" && invoice.amount_paid === 0) {
-        console.log(`skipping ${0} invoice (trial setup)`)
+        console.log(`skipping $0 invoice (trial setup)`)
         return;
     }
 
@@ -153,7 +154,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
-    console.log(`Insde invoice.payment_failed`);
+    console.log(`Inside invoice.payment_failed`);
     const subscriptionId = invoice.lines.data[0]?.subscription as string;
     if (!subscriptionId) return;
 
@@ -179,7 +180,7 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
 async function handleCustomerSubscriptionUpdated(
     stripeSubscription: Stripe.Subscription
 ) {
-    console.log(`Insde customer.subscription.updated`, stripeSubscription.status);
+    console.log(`Inside customer.subscription.updated`, stripeSubscription.status);
     const userId = stripeSubscription.metadata?.userId;
 
     if (stripeSubscription.status === "trialing") {
@@ -224,22 +225,22 @@ async function handleCustomerSubscriptionUpdated(
 async function handleCustomerSubscriptionDeleted(
     stripeSubscription: Stripe.Subscription
 ) {
-    console.log(`Insde customer.subscription.deleted`, stripeSubscription.status);
+    console.log(`Inside customer.subscription.deleted`, stripeSubscription.status);
     const userId = stripeSubscription.metadata?.userId;
     if (!userId) return;
 
-    const isTrailExpired =
+    const isTrialExpired =
         stripeSubscription.trial_end && stripeSubscription.status === "canceled";
 
     await SubscriptionModel.findOneAndUpdate(
         { userId },
         {
             $set: {
-                status: isTrailExpired
+                status: isTrialExpired
                     ? SubscripionStatus.TRIAL_EXPIRED
                     : SubscripionStatus.CANCELLED,
                 plan: null,
-                ...(!isTrailExpired && { cancelledAt: new Date() })
+                ...(!isTrialExpired && { cancelledAt: new Date() })
             }
         },
     );
@@ -247,11 +248,10 @@ async function handleCustomerSubscriptionDeleted(
     console.log(`Subscription deleted for user ${userId}`);
 }
 
-function getPlan(subscription: Stripe.Subscription) {
+function getPlan(subscription: Stripe.Subscription): SubscriptionPlanEnum {
     const priceId = subscription.items.data[0].price.id;
     if (priceId === Env.STRIPE_YEARLY_PLAN_PRICE_ID) {
         return SubscriptionPlanEnum.YEARLY;
-    } else if (priceId === Env.STRIPE_MONTHLY_PLAN_PRICE_ID) {
-        return SubscriptionPlanEnum.MONTHLY;
     }
+    return SubscriptionPlanEnum.MONTHLY; // default fallback
 }

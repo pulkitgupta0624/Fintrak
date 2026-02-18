@@ -36,13 +36,17 @@ export const registerService = async (body: RegisterSchemaType) => {
 
             const _userId = newUser.id.toString();
 
-            const ONE_MINUTES_IN_SECONDS = 1*60;
-            const trialEndDate = Math.floor(Date.now() / 1000) + TRIAL_DAYS * ONE_MINUTES_IN_SECONDS    
+            // ============================================================
+            // FIX: Was using ONE_MINUTES_IN_SECONDS = 1*60 = 60 seconds
+            //      This meant TRIAL_DAYS=7 gave only 7 MINUTES of trial!
+            //      Now correctly using 24*60*60 = 86400 seconds per day
+            // ============================================================
+            const ONE_DAY_IN_SECONDS = 24 * 60 * 60; // 86400 seconds = 1 day
+            const trialEndDate = Math.floor(Date.now() / 1000) + TRIAL_DAYS * ONE_DAY_IN_SECONDS;
 
             const stripeSubscription = await stripeClient.subscriptions.create({
                 customer: customer.id,
                 items: [{ price: Env.STRIPE_MONTHLY_PLAN_PRICE_ID }],
-                // trial_period_days: TRIAL_DAYS,
                 trial_end: trialEndDate,
                 trial_settings: {
                     end_behavior: {
@@ -65,7 +69,7 @@ export const registerService = async (body: RegisterSchemaType) => {
                 trialDays: TRIAL_DAYS,
             });
 
-            await subscriptionDoc.save({ session})
+            await subscriptionDoc.save({ session })
 
             newUser.subscriptionId = subscriptionDoc._id as mongoose.Types.ObjectId;
             await newUser.save({ session });
